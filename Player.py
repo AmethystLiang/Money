@@ -1,4 +1,4 @@
-"""a instance of a player for the game."""
+"""an instance of a player for the game."""
 class Player:
 	#constructor :
 	def __init__(self,name):
