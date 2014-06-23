@@ -8,20 +8,23 @@ from simpy import *
 import GameFunction as gf
 import Hotel 
 
-#initial money you have
-money = 500000 
+"""So, what it would do first is setup the environment: Create a player, create the other controllers, and start the time keeping (simulation of time)
+Now, within it, it'd call the other controllers."""
+def initialSetup():
+	p = Player()
+	#create an environment for the virture world 
+	env = Environment()
 
 #still need to do a virtue digital clock
 
 
-#create an environment for the virture world 
-env = Environment()
+
 #starting time
 week = 0
 month = 1
 year = 2014
 
-
+#test part, not really in use
 def clock(env,tick):
 	while True: 
 		#print the current week
