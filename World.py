@@ -22,7 +22,7 @@ hc = HC.HotelController()
 #still need to do a virtue digital clock
 
 #start running the game.
-def run(hc,player):
+def run(player):
 	hc.run(player)
 
 #starting time
@@ -41,13 +41,16 @@ def clock(env,tick):
 
 
 
+
+
+
 #run the world 
 if __name__ == '__main__':
 	#greetings 
 	print "Welcome to Neil's World! " + '\n'+  "Make your own fortune to buy Jinjing a BMW ~ " 
 	#Option to enter the game or not 
 	gf.EnterGame()
-	run(hc,p)
+	run(p)
 	#env.process(clock(env,1))
 	#test : run for 5 week
 	env.run(until = 5)

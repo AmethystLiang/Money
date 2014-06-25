@@ -94,6 +94,7 @@ if __name__ == '__main__':
     h = Hotel('Jinjing Garden' ,'Express Inn',6,6,5,5)
     
     
+    
 
 
 
