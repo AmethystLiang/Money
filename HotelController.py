@@ -1,8 +1,11 @@
 from Hotel import *
 from Player import *
+
+
+#messages to be chosed to put before asking user to give an input
 m1 = 'Enter your choice :'
 m2 = 'Enter your number :'
-"""It prompts the user to """
+"""It prompts the user to make an int input. If the input is not an int, it will ask the user to enter again """
 def checkValidInput(m):
 	is_valid = 0 
 	choice = 0
