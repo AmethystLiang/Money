@@ -56,8 +56,6 @@ class Hotel:
     def _str_(self):
         return "Your " + self.name + " is a " + self.level + " hotel "
 
-    def BuyHotel(self,player):
-        player.BuyProperty(self.initial_cost())
 
 
 
@@ -92,7 +90,24 @@ if __name__ == '__main__':
     
     #testing
     h = Hotel('Jinjing Garden' ,'Express Inn',6,6,5,5)
+
     
+    
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
     
     
 
