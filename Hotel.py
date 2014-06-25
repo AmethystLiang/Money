@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+from Player import *
 
 
 
@@ -56,13 +56,17 @@ class Hotel:
     def _str_(self):
         return "Your " + self.name + " is a " + self.level + " hotel "
 
+    def BuyHotel(self,player):
+        player.BuyProperty(self.initial_cost())
+
+
 
     #the cost for first building a hotel with certain number of rooms
     def initial_cost(self):
         #return the initial cost for buiding the hotel, in thousand representation
-     	return '{:,}'.format(self.number_of_QS*self.room_cost['Queen Standard'] + \
+     	return self.number_of_QS*self.room_cost['Queen Standard'] + \
      	self.number_of_KS*self.room_cost['King Standard'] + self.number_of_QD*self.room_cost['Queen Deluxe'] +\
-        + self.number_of_KD*self.room_cost['King Deluxe'] + BUILDING_COST[self.level])
+        + self.number_of_KD*self.room_cost['King Deluxe'] + BUILDING_COST[self.level]
     
 
     def checkout_a_room(self,type):

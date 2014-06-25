@@ -64,6 +64,10 @@ def BuildHotel():
 			#put in number of different types of rooms
 			print "How many Queen Standard rooms would you like to have ? "
 			QS = input()
+			while isinstance(QS,int)!= True :
+				print "in while"
+				print "please press the right key"
+				QS = input()
 			print "How many Queen Deluxe rooms would you like to have ? "
 			QD = input()
 			print "How many King Standard rooms would you like to have ? "
