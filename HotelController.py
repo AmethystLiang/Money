@@ -1,22 +1,12 @@
 from Hotel import *
 from Player import *
+from Tools import *
 
 
 #messages to be chosed to put before asking user to give an input
 m1 = 'Enter your choice :'
 m2 = 'Enter your number :'
 """It prompts the user to make an int input. If the input is not an int, it will ask the user to enter again """
-def checkValidInput(m):
-	is_valid = 0 
-	choice = 0
-	while not is_valid:
-		try: 
-			choice = int(raw_input(m))
-			is_valid = 1
-		except ValueError,e :
-			print "Not a valid input. Please press the right key"
-			checkValidInput(m)
-		return choice
 
 """an instance of a controller for hotel"""
 class HotelController:
@@ -34,11 +24,12 @@ class HotelController:
 		print "press 5 for Five Star Hotel " 
 		#make sure user are pressing the right key 
 		#get pressed key from user
-		x = checkValidInput(m1) 
+		x = check_valid_input(m1) 
 		while x > 5 :
-			print "Not a valid input. Please press the right key"
-			x = checkValidInput(m1)
+			print "Not a valid input. Please enter a valid input"
+			x = check_valid_input(m1)
 		#use dictionary to choose hotel from input
+		print x
 		type = {
 			1 : 'Express Inn',
 			2 : 'Holiday Inn',
@@ -53,13 +44,13 @@ class HotelController:
 		#should put in the range of hotels that you can choose to build later
 		#put in number of different types of rooms
 		print "How many Queen Standard rooms would you like to have ? "
-		QS = checkValidInput(m2)
+		QS = check_valid_input(m2)
 		print "How many Queen Deluxe rooms would you like to have ? "
-		QD = checkValidInput(m2)
+		QD = check_valid_input(m2)
 		print "How many King Standard rooms would you like to have ? "
-		KS = checkValidInput(m2)
+		KS = check_valid_input(m2)
 		print "How many King Deluxe rooms would you like to have ? "
-		KD = checkValidInput(m2)
+		KD = check_valid_input(m2)
 		#build a hotel object
 		hotel = Hotel(name,type,QS,QD,KS,KD)
 		#actually buy the hotel object created
