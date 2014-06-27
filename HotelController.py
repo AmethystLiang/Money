@@ -25,7 +25,7 @@ class HotelController:
 		#make sure user are pressing the right key 
 		#get pressed key from user
 		x = check_valid_input(m1) 
-		while x > 5 :
+		while x > 5 or x < 1 :
 			print "Not a valid input. Please enter a valid input"
 			x = check_valid_input(m1)
 		#use dictionary to choose hotel from input
