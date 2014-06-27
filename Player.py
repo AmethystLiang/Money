@@ -20,7 +20,7 @@ class Player:
 
 	"""return True if the player has enough money to buy the property and deduct money from the player.Return
 	false if the player doesn't have enough money"""
-	def BuyProperty(self, cost):
+	def buy_property(self, cost):
 		if self.money < cost:
 			print "You do not have enough money to purchase this." 
 			result = False 
@@ -34,7 +34,7 @@ class Player:
 #test Player 
 if __name__ == '__main__':
 	p = Player('Jinjing')
-	print p.BuyProperty(100)
+	print p.buy_property(100)
 	
 
 
