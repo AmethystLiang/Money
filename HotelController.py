@@ -61,7 +61,7 @@ class HotelController:
 			return
 
 	def checkout_a_room(hotel,type):
-		if Hotel.checked[type] < hotel.dic_total_rooms[type] : hotel.checked[type] += 1
+		if hotel.checked[type] < hotel.dic_total_rooms[type] : hotel.checked[type] += 1
 		print "here"
 		hotel.revenue = hotel.revenue + hotel.room_price[type]
 		
