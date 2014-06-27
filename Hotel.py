@@ -36,17 +36,24 @@ class Hotel:
     #umber_of_singles,number_of_doubles argurments take integers
     #level takes strings
     def __init__(self,name,level,number_of_QS,number_of_KS,number_of_QD,number_of_KD):
-     	self.name = name
+        self.name = name
         self.level = level
-        self.number_of_QS = number_of_QS
-     	self.number_of_KS = number_of_KS
-        self.number_of_QD = number_of_QD
-        self.number_of_KD = number_of_KD
+        #Todo: delete these 4 variables below eventually
+        #self.number_of_QS = number_of_QS
+        #self.number_of_KS = number_of_KS
+        #self.number_of_QD = number_of_QD
+        #self.number_of_KD = number_of_KD
         """when first build the hotel, no rooms are checked out
         the numbers in the array represent checked QS,KS,QD,KD in sequence"""
-
-     	#self.checked = {'Queen Standard':0,'King Standard':0,'Queen Deluxe':0,'King Deluxe':0]
-        self.checked = [0,0,0,0]
+        self.dic_total_rooms = {'Queen Standard':number_of_QS,
+                                'King Standard':number_of_KS,
+                                'Queen Deluxe': number_of_QD,
+                                'King Deluxe': number_of_KD}
+        self.dict_checked_out = {'Queen Standard':0,
+                                'King Standard':0,
+                                'Queen Deluxe':0,
+                                'King Deluxe':0}
+        #self.checked = [0,0,0,0]
         self.room_cost = ROOM_COST[level]
         self.room_price = ROOM_PRICE[level]
         self.revenue = 0
@@ -56,71 +63,15 @@ class Hotel:
     def _str_(self):
         return "Your " + self.name + " is a " + self.level + " hotel "
 
-
-
-
     #the cost for first building a hotel with certain number of rooms
     def initial_cost(self):
         #return the initial cost for buiding the hotel, in thousand representation
-     	return self.number_of_QS*self.room_cost['Queen Standard'] + \
-     	self.number_of_KS*self.room_cost['King Standard'] + self.number_of_QD*self.room_cost['Queen Deluxe'] +\
-        + self.number_of_KD*self.room_cost['King Deluxe'] + BUILDING_COST[self.level]
+        return self.dic_total_rooms['Queen Standard']*self.room_cost['Queen Standard'] + \
+        self.dic_total_rooms['King Standard']*self.room_cost['King Standard'] + self.dic_total_rooms['Queen Deluxe']*self.room_cost['Queen Deluxe'] +\
+        + self.dic_total_rooms['King Deluxe']*self.room_cost['King Deluxe'] + BUILDING_COST[self.level]
     
-
-    def checkout_a_room(self,type):
-        if type == 'Queen Standard':
-             if self.checked[0] < self.number_of_QS: 
-         	 	self.checked[0] = self.checked[0] +1
-        if type == 'King Standard':
-             if self.checked[1] < self.number_of_KS: 
-                self.checked[1] = self.checked[1] +1
-        if type == 'Queen Deluxe':
-             if self.checked[2] < self.number_of_QS: 
-                self.checked[2] = self.checked[2] +1
-        if type == 'King Deluxe':
-             if self.checked[3] < self.number_of_KS: 
-                self.checked[3] = self.checked[3] +1
-        print "here"
-        self.revenue = self.revenue + self.room_price[type]
-
-
-
 
 if __name__ == '__main__':
     
     #testing
     h = Hotel('Jinjing Garden' ,'Express Inn',6,6,5,5)
-
-    
-    
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-   
-
-
-
-
-
-
-
-
-
-

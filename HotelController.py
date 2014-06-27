@@ -59,6 +59,11 @@ class HotelController:
 			print "Conguationlations for having your first %s hotel : %s. The total cost of buildign the hotel is %s" %(hotel.level,hotel.name,hotel.initial_cost())
 		else:
 			return
+
+	def checkout_a_room(hotel,type):
+		if Hotel.checked[type] < hotel.dic_total_rooms[type] : hotel.checked[type] += 1
+		print "here"
+		hotel.revenue = hotel.revenue + hotel.room_price[type]
 		
 
 	def run(self,player):
