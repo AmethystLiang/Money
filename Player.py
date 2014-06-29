@@ -6,16 +6,16 @@ class Player:
 		self.money = 500000
 
 
-	def getMoney(self):
+	def get_money(self):
 		return self.money
 
 
-	def addMoney(self,amount):
+	def add_money(self,amount):
 		self.money += amount
 
 
-	def subtractMoney(self,amount):
-		self.money -=amount
+	def subtract_money(self,amount):
+		self.money -= amount
 
 
 	"""return True if the player has enough money to buy the property and deduct money from the player.Return
@@ -23,12 +23,11 @@ class Player:
 	def buy_property(self, cost):
 		if self.money < cost:
 			print "You do not have enough money to purchase this." 
-			result = False 
+			return False 
 		else:
-			self.subtractMoney(cost)
+			self.subtract_money(cost)
 			print "Propety purchased"
-			result = True 
-		return result
+			return True 
 
 
 #test Player 

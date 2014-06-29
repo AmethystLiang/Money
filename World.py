@@ -40,7 +40,7 @@ def clock(env,tick):
 		yield env.timeout(tick)
 
 
-def GameCycle(env,cycletime)
+def GameCycle(env,cycletime):
 	yield env.timeout(cycletime)
 
 
