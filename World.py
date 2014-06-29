@@ -13,7 +13,7 @@ import GameFunction as gf
 """So, what it would do first is setup the environment: Create a player, create the other controllers, and start the time keeping (simulation of time)
 Now, within it, it'd call the other controllers."""
 p = Player.Player('Neil')
-#create an environment for the virture world 
+#An event that may happen at some point in time.
 env = Environment()
 #create a hotel controller
 hc = HC.HotelController()
@@ -40,7 +40,8 @@ def clock(env,tick):
 		yield env.timeout(tick)
 
 
-
+def GameCycle(env,cycletime)
+	yield env.timeout(cycletime)
 
 
 
@@ -53,5 +54,6 @@ if __name__ == '__main__':
 	run(p)
 	#env.process(clock(env,1))
 	#test : run for 5 week
+	#run the game 
 	env.run(until = 5)
 

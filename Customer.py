@@ -1,32 +1,20 @@
-#import necessary mathematics and statistics module 
-import numpy as num
-import scipy as sci
-import matplotlib as mat
-import random
-#import the python simulation package
-from simpy import *
- 
-
-class Arrival(Sim.Process):
-	"""Scource generates costumers at random 
+""" bank01_OO: The single non-random Customer """
+from simpy import *  #1
+## Model components -----------------------------
+class Customer(Process):   
+    def __init__(self,name):
+        self.name =  name  
 
 
-	Arrivals are at a time-dependent rate"""
+    def visit(self, timeInBank):
+        print("%2.1f %s  Here I am" % (self.sim.now(), self.name))
+        yield evn.timeout(timeInBank)
+        print("%2.1f %s  I must leave" %(self.sim.now(), self.name))
 
 
-
-	def generate(self):
-		i = 0
-		while (self.sim.now()< G.maxTime):
-				tnow = self.sim.now()
-				arrivalrate = 100 + 10 * math.sin(math.pi *tnow/12.0)
-				#the mean arrival rate is a function based on the time during the day
-				t = random.expovariate(arrivalrate)
-				yield Sim.hold, self,t
-				c = Costumers(name = "Costumers%02d"(i),sim=self.sim)
-				
-
-class Costomer(Sim.Process):
-	"""Costomers come every day to check in the hotel."""
-	def visit(self)
-		self.sim.checkedcostumers += 1
+if __name__ == '__main__':
+    env = Environment()
+    Neil = Customer(name = "Neil")
+    print Neil.name
+    env.process(Neil.visit(5))
+    env.run(until=50)
