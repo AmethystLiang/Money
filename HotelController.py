@@ -8,7 +8,8 @@ m1 = 'Enter your choice :'
 m2 = 'Enter your number :'
 """It prompts the user to make an int input. If the input is not an int, it will ask the user to enter again """
 
-"""an instance of a controller for hotel"""
+"""an instance of a controller for hotel.
+This simulates a hotel. Customers can go into the hotel and check in a room"""
 class HotelController:
 	#create an array of hotel objects
 	def __init__(self):

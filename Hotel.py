@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 from Player import *
 
-
-
 """facility cost for different types of hotels
     will replace with more realistic data later"""
 BUILDING_COST =  {  'Express Inn' : 100000,
@@ -25,9 +23,7 @@ ROOM_PRICE = { 'Express Inn':{'Queen Standard':80, 'King Standard':100, 'Queen D
     'Four Star': {'Queen Standard':150, 'King Standard':200, 'Queen Deluxe':250, 'King Deluxe':300},
     'Five Star': {'Queen Standard':250, 'King Standard':280, 'Queen Deluxe':300, 'King Deluxe':350}}
 
-
-
-
+"""This simulates a hotel. Customers can go into the hotel and check in a room"""
 """ Every hotel you built is an instance of the hotel class.when you first build a hotel,
     you can decide the initial level of your hotel (e.g : 4-star) The level set the basic cost
     for the basic facilities of your hotel.It also influence on the cost of each room. """
@@ -35,7 +31,8 @@ class Hotel:
     #constructor
     #umber_of_singles,number_of_doubles argurments take integers
     #level takes strings
-    def __init__(self,name,level,number_of_QS,number_of_KS,number_of_QD,number_of_KD):
+    def __init__(self,env,name,level,number_of_QS,number_of_KS,number_of_QD,number_of_KD):
+        self.env = env
         self.name = name
         self.level = level
         #Todo: delete these 4 variables below eventually

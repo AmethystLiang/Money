@@ -7,15 +7,13 @@ class BankController():
         self.env = env
         self.teller = Resource(env, num_tellers)
 
-    def visit(self, customer):
-        yield self.env.timeout(5)
-        print "You are visiting a bank"
-
-
 if __name__ == '__main__':
     env = Environment()
-    tb = Bank(env, 2)
-    neil = Customer(name = "Neil")
-    print neil.name + " hi"
-    env.process(tb.visit(neil))
+    tb = BankController(env, 1)
+    Neil = Customer(env,"Neil")
+    Jinjing = Customer(env,"Jinjing")
+    env.process(Neil.visit(tb.teller,5))
+    env.process(Jinjing.visit(tb.teller,5))
     env.run(until=50)
+
+    
