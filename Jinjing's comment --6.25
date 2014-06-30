@@ -1,8 +1,0 @@
-1. added checking valid input to HotelController:
-	a. using a try-except block 
-	b. method called checkValidInput()
-
-
-2. Changed BuyHotel to HotelController
-
-3. The problem I'm having is in I was wishing BuyHotel() to return a True or False. But it didn't. It just returns None , and so my condition check in HotelCotnroller "if self.BuyHotel(hotel,player):" doesn't work at all. Don't know why
