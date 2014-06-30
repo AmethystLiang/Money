@@ -9,7 +9,7 @@ m2 = 'Enter your number :'
 """It prompts the user to make an int input. If the input is not an int, it will ask the user to enter again """
 
 """an instance of a controller for hotel.
-This simulates a hotel. Customers can go into the hotel and check in a room"""
+"""
 class HotelController:
 	#create an array of hotel objects
 	def __init__(self):
@@ -20,7 +20,7 @@ class HotelController:
 
 
 	def new_hotel(self,player):
-		print "press 1 for Express Inn. The cost is 100000" + '\n' + "press 2 for Holiday Inn." 
+		print "press 1 for Express IThis simulates a hotel. Customers can go into the hotel and check in a roomnn. The cost is 100000" + '\n' + "press 2 for Holiday Inn." 
 		print "press 3 for Three Star Hotel" + '\n' + "press 4 for Four Star Hotel"
 		print "press 5 for Five Star Hotel " 
 		#make sure user are pressing the right key 
