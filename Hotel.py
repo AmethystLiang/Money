@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from Player import *
+from simpy import *
 
 """facility cost for different types of hotels
     will replace with more realistic data later"""
@@ -42,18 +43,29 @@ class Hotel:
         #self.number_of_KD = number_of_KD
         """when first build the hotel, no rooms are checked out
             the numbers in the array represent checked QS,KS,QD,KD in sequence"""
-        self.dic_total_rooms = {'Queen Standard':number_of_QS,
+        self.dic_total_rooms = {
+            'Queen Standard':number_of_QS,
             'King Standard':number_of_KS,
             'Queen Deluxe': number_of_QD,
-            'King Deluxe': number_of_KD}
-        self.dict_checked_out = {'Queen Standard':0,
+            'King Deluxe': number_of_KD
+            }
+        self.dict_checked_out = {
+            'Queen Standard':0,
             'King Standard':0,
             'Queen Deluxe':0,
-            'King Deluxe':0}
+            'King Deluxe':0
+            }
         #self.checked = [0,0,0,0]
         self.room_cost = ROOM_COST[level]
         self.room_price = ROOM_PRICE[level]
         self.revenue = 0
+        #TESTING BELOW FOR SIMPY#
+        self.simpy_rooms = {
+            'Queen Standard':Resource(env, number_of_QS),
+            'King Standard':Resource(env, number_of_KS),
+            'Queen Deluxe': Resource(env, number_of_QD),
+            'King Deluxe': Resource(env, number_of_KD)
+            }
     
     #need to be fixed later
     #return the string representation of the hotel

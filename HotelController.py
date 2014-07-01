@@ -1,6 +1,10 @@
 from Hotel import *
 from Player import *
 from Tools import *
+from simpy import *
+from Customer import *
+from GlobalDeclaration import *  #import global parameters from class G
+import random, math
 
 
 #messages to be chosed to put before asking user to give an input
@@ -12,8 +16,25 @@ m2 = 'Enter your number :'
 """
 class HotelController:
 	#create an array of hotel objects
-	def __init__(self):
+	def __init__(self, env):
 		self.hotels = []
+		self.env = env
+
+	def generate(self,resource):
+		i=0
+		while (self.env.now < G.maxTime):
+			tnow = self.env.now
+			#generate a semi-random arrivalrate
+			arrivalrate =  100 + 10 * math.sin(math.pi * tnow/12.0)
+			t = random.expovariate(arrivalrate)
+			yield self.env.timeout(t)
+			#after a random time, generate a new customer
+			c = Customer(env,"Customer%02d" % (i))
+			#the customer stays for a random long time period
+			timeStaying = random.expovariate(1.0/G.staytime)
+			#call the customer "visit()"method that takes in two arguements
+			env.process(c.visit(resource,timeStaying))
+			i += 1
 
 	def buy_hotel(self,hotel,player):
 		player.buy_property(hotel.initial_cost())
@@ -75,8 +96,10 @@ class HotelController:
 		pass
 
 if __name__ == '__main__':
+	env = Environment()
 	c = Player('Neil')
-	a = HotelController()
-	b = Hotel('Jinjing Garden' ,'Express Inn',6,6,5,5)
+	a = HotelController(env)
+	b = Hotel(env, 'Jinjing Garden' ,'Express Inn',6,6,5,5)
 	print a.buy_hotel(b,c)
-
+	env.process(a.generate(b.simpy_rooms['Queen Standard']))
+	env.run(until = G.maxTime)

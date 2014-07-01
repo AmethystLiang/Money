@@ -1,7 +1,7 @@
 """ bank01_OO: The single non-random Customer """
 from simpy import *  
 
-class Customer(Process):   
+class Customer():   
     def __init__(self,env,name):
         self.env = env
         self.name =  name  

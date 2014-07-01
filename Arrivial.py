@@ -4,7 +4,7 @@ from GlobalDeclaration import *  #import global parameters from class G
 from BankController import *
 import random, math
 
-class Arrival(Process):
+class Arrival():
     """ Source generates cars at random
         Arrivals are at a time-dependent rate
     """
