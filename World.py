@@ -5,10 +5,12 @@
 The simulation include a virtue clock, the clock counts days instead of seconds"""
 
 from simpy import *
+from GlobalDeclaration import *
 import Hotel 
 import HotelController as HC
 import Player
-import GameFunction as gf
+import GameFunction as gf 
+
 
 """So, what it would do first is setup the environment: Create a player, create the other controllers, and start the time keeping (simulation of time)
 Now, within it, it'd call the other controllers."""
@@ -16,7 +18,7 @@ p = Player.Player('Neil')
 #An event that may happen at some point in time.
 env = Environment()
 #create a hotel controller
-hc = HC.HotelController()
+hc = HC.HotelController(env)
 
 
 #still need to do a virtue digital clock
@@ -52,8 +54,5 @@ if __name__ == '__main__':
 	#Option to enter the game or not 
 	gf.EnterGame()
 	run(p)
-	#env.process(clock(env,1))
-	#test : run for 5 week
-	#run the game 
-	env.run(until = 5)
+	env.run(until = G.maxTime)
 

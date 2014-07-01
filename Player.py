@@ -28,12 +28,10 @@ class Player:
 			self.subtract_money(cost)
 			print "Propety purchased"
 			return True 
+			
 
 
 #test Player 
 if __name__ == '__main__':
 	p = Player('Jinjing')
 	print p.buy_property(100)
-	
-
-
