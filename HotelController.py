@@ -65,7 +65,7 @@ class HotelController:
         if self.buy_hotel(hotel,player):
             #add the newly built hotel to the array
             self.hotels.append(hotel)
-            print "Conguationlations for having your first %s hotel : %s. The total cost of buildign the hotel is %s" %(hotel.level,hotel.name,hotel.initial_cost())
+            print "Conguationlations for having your first %s hotel : %s. The total cost of building the hotel is %s" %(hotel.level,hotel.name,hotel.initial_cost())
         else:
             return
 
@@ -80,16 +80,14 @@ class HotelController:
             yield self.env.timeout(t)
             #after a random time, generate a new customer
             c = Customer(self.env,"Customer%02d" % (i))
+            G.customers += 1  # not sure whether or not should do this count
             #the customer stays for a random long time period
             timeStaying = random.expovariate(1.0/G.staytime)
             #call the customer "visit()"method that takes in two arguements
-            self.env.process(c.visit(hotel.simpy_rooms[roomtype],timeStaying))
-            print "the stay time is %d" %timeStaying
+            self.env.process(c.visit(hotel.simpy_rooms[roomtype],timeStaying,hotel,roomtype))
             """need to fix the problem that once the simulation stopped before the timeStaying finishes,
             how could we make sure we're calculating using the right time?.Namely, the transition part between
             weeks."""
-            hotel.revenue += hotel.room_price[roomtype]*math.ceil(timeStaying) #math.ceil(),get the upper rounded number
-            print hotel.revenue
             i += 1
 
 
