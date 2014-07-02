@@ -82,8 +82,7 @@ class HotelController:
             c = Customer(self.env,"Customer%02d" % (i))
             #the customer stays for a random long time period
             timeStaying = random.expovariate(1.0/G.staytime)
-            #call the customer "visit()"method that takes in two arguements
-            #self.env.process(c.visit(hotel.simpy_rooms[roomtype],timeStaying,hotel,roomtype))
+            #simulate a customer
             self.env.process(c.visit_hotel(hotel.simpy_rooms[roomtype],timeStaying,hotel))
             """need to fix the problem that once the simulation stopped before the timeStaying finishes,
             how could we make sure we're calculating using the right time?.Namely, the transition part between
