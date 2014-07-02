@@ -29,18 +29,14 @@ ROOM_PRICE = { 'Express Inn':{'Queen Standard':80, 'King Standard':100, 'Queen D
     you can decide the initial level of your hotel (e.g : 4-star) The level set the basic cost
     for the basic facilities of your hotel.It also influence on the cost of each room. """
 class Hotel:
+    #Different Types of hotel rooms
+    ROOM_TYPES = ('Queen Standard', 'King Standard', 'Queen Deluxe', 'King Deluxe')
+
     #constructor
-    #umber_of_singles,number_of_doubles argurments take integers
-    #level takes strings
     def __init__(self,env,name,level,number_of_QS,number_of_KS,number_of_QD,number_of_KD):
         self.env = env
         self.name = name
         self.level = level
-        #Todo: delete these 4 variables below eventually
-        #self.number_of_QS = number_of_QS
-        #self.number_of_KS = number_of_KS
-        #self.number_of_QD = number_of_QD
-        #self.number_of_KD = number_of_KD
         """when first build the hotel, no rooms are checked out
             the numbers in the array represent checked QS,KS,QD,KD in sequence"""
         self.dic_total_rooms = {
