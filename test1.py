@@ -1,4 +1,10 @@
 import math
+from simpy import *
+
+
+#test
 if __name__ == '__main__':
-	print math.ceil(4.5)
+	env = Environment()
+	env.run(until = 50)
+	print "Week %d has passed." %((env.now/7)+1)
 	

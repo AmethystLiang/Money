@@ -4,3 +4,4 @@ class G:
     arrivalrate = 100 # per hour
     staytime = 2.0 # days
     customers = 0 #visited customers
+    reported = 0 #represent the week that has been reported

@@ -1,0 +1,19 @@
+1. "So, currently the program yields and ask to build another hotel after a set amount of time. This is done in World.py:
+            yield self.env.timeout(10)"
+
+This is not quite right. Don't want the program to stay and wait for 10 units of time. I want it to run for 10 units of time, and then stop. So this does not work.
+
+Instead, I created a new process in Menu.py called WeellyReport(). Once I yeild it in other process, the other process can be resumed once the process is finished.(See http://simpy.readthedocs.org/en/latest/simpy_intro/process_interaction.html )
+
+Also, I used G.maxTime to present a week
+
+
+2.Added a check before every yeild report to make sure the weeklyreport doesn't happen during the yield
+
+3.My WeeklyReport(in Menu.py) just print out things, need to add in functionality for people to make further investment.
+
+4. In my world, I only run for 20 days, so only has 2 weeks
+
+
+2. Need to do input check for all inputs: add in functions in Tools.py
+	reference : http://learnpythonthehardway.org/book/ex48.html

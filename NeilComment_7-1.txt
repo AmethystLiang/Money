@@ -1,5 +1,4 @@
-So, currently the program yields and ask to build another hotel after a set amount of time. This is done in World.py:
-            yield self.env.timeout(10)
+
             hc.build_new_hotel(player)
 So, after '10' units of time, it asks the player to build another hotel.
 This will need some tweaking as I'm not sure long a week is

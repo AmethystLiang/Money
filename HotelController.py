@@ -6,6 +6,7 @@ from Customer import *
 from Arrival import *
 from GlobalDeclaration import *  #import global parameters from class G
 import random, math
+import Menu
 
 
 #messages to be chosed to put before asking user to give an input
@@ -77,13 +78,22 @@ class HotelController:
             #generate a semi-random arrivalrate
             arrivalrate =  100 + 10 * math.sin(math.pi * tnow/12.0)
             t = random.expovariate(arrivalrate)
-            yield self.env.timeout(t)
+            #check whether we need to stop while waiting to create another customer
+            #Added a check before every yeild report to make sure the weeklyreport doesn't happen during the yield
+            if (self.env.now + t) %7 < t :
+                yield self.env.timeout(t-(self.env.now + t) %7)
+                print self.env.now
+                yield self.env.process(Menu.WeeklyReport(self.env,self))
+                yield self.env.timeout((self.env.now + t) %7)
+            else :
+                yield self.env.timeout(t)
+           
             #after a random time, generate a new customer
             c = Customer(self.env,"Customer%02d" % (i))
             #the customer stays for a random long time period
             timeStaying = random.expovariate(1.0/G.staytime)
-            #simulate a customer
-            self.env.process(c.visit_hotel(hotel.simpy_rooms[roomtype],timeStaying,hotel))
+            #call the customer "visit()"method that takes in two arguements
+            self.env.process(c.visit(hotel.simpy_rooms[roomtype],timeStaying,hotel,roomtype,self))
             """need to fix the problem that once the simulation stopped before the timeStaying finishes,
             how could we make sure we're calculating using the right time?.Namely, the transition part between
             weeks."""
@@ -120,5 +130,3 @@ if __name__ == '__main__':
     hc = HotelController(env)
     a = Hotel(env,"Jinjing",'Three Star',5,6,5,6)
     print hc.buy_hotel(a,p)
-
-    
