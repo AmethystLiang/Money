@@ -38,7 +38,7 @@ class Customer():
             random_type_number = (random_type_number + 1) % len(Hotel.ROOM_TYPES)
             room_type = Hotel.ROOM_TYPES[random_type_number]
             if initial_random == random_type_number:
-                #TODO: If the entire hotle is full, try a different hotle
+                #TODO: If the entire hotel is full, try a different hotel
                 break
 
         #may need to change here to reflect that customers leave once they can't find a room

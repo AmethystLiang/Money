@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """A simulated world where Neil runs a series of business.
-The simulation include a virtue clock, the clock counts days instead of seconds"""
+The simulation include a virtual clock, the clock counts days instead of seconds"""
 
 from simpy import *
 from GlobalDeclaration import *
@@ -11,40 +11,39 @@ import HotelController as HC
 import Player
 import GameFunction as gf 
 
+class World():
+	"""So, what it would do first is setup the environment: Create a player, create the other controllers, and start the time keeping (simulation of time)
+	Now, within it, it'd call the other controllers."""
+	def __init__(self, env):
+		self.env = env
 
-"""So, what it would do first is setup the environment: Create a player, create the other controllers, and start the time keeping (simulation of time)
-Now, within it, it'd call the other controllers."""
-p = Player.Player('Neil')
-#An event that may happen at some point in time.
-env = Environment()
-#create a hotel controller
-hc = HC.HotelController(env)
+	env = Environment()
+	#starting time
+	week = 0
+	month = 1
+	year = 2014
+	#ToDo: a virtual digital clock
 
+	#start running the game.
+	def run(self, hc, player):
+		while True:
+			hc.build_new_hotel(player)
+			hc.run(player)
+			#below here runs every '10' units. So make the thing that runs every week to go here
+			yield self.env.timeout(10)
+			hc.build_new_hotel(player)
 
-#still need to do a virtue digital clock
+	#test part, not really in use
+	def clock(self, tick):
+		while True: 
+			#print the current week
+			self.week = self.env.now
+			print "%s %d" %('week',self.week)
+			#process continue until one week after
+			yield self.env.timeout(tick)
 
-#start running the game.
-def run(player):
-	hc.run(player)
-
-#starting time
-week = 0
-month = 1
-year = 2014
-
-#test part, not really in use
-def clock(env,tick):
-	while True: 
-		#print the current week
-		week = env.now
-		print "%s %d" %('week',week)
-		#process continue until one week after
-		yield env.timeout(tick)
-
-
-def GameCycle(env,cycletime):
-	yield env.timeout(cycletime)
-
+	def GameCycle(cycletime):
+		yield self.env.timeout(cycletime)
 
 
 #run the world 
@@ -53,6 +52,10 @@ if __name__ == '__main__':
 	print "Welcome to Neil's World! " + '\n'+  "Make your own fortune to buy Jinjing a BMW ~ " 
 	#Option to enter the game or not 
 	gf.EnterGame()
-	run(p)
-	env.run(until = G.maxTime)
-
+	#Todo: Ask for player's name
+	env = Environment()
+	world = World(env)
+	p = Player.Player('Neil')
+	hc = HC.HotelController(world.env)
+	world.env.process(world.run(hc, p))
+	world.env.run(until = G.maxTime)
