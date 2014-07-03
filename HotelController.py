@@ -71,7 +71,7 @@ class HotelController:
             return
 
 
-    def generate(self,hotel,roomtype):
+    def generate(self):
         i=0
         while (self.env.now < G.maxTime):
             tnow = self.env.now
@@ -93,7 +93,7 @@ class HotelController:
             #the customer stays for a random long time period
             timeStaying = random.expovariate(1.0/G.staytime)
             #call the customer "visit()"method that takes in two arguements
-            self.env.process(c.visit(hotel.simpy_rooms[roomtype],timeStaying,hotel,roomtype,self))
+            self.env.process(c.visit_hotel(timeStaying, self))
             """need to fix the problem that once the simulation stopped before the timeStaying finishes,
             how could we make sure we're calculating using the right time?.Namely, the transition part between
             weeks."""
@@ -102,7 +102,7 @@ class HotelController:
 
     def customer_flow(self,hotel):
         #need to add generator of customers for more types of rooms
-        self.env.process(self.generate(hotel,'Queen Standard'))
+        self.env.process(self.generate())
     
 
     #don't actually need this,since the resouce part already took care of it    

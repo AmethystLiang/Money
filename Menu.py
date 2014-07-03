@@ -24,7 +24,7 @@ def WeeklyReport(env,hc):
 		G.reported = round(env.now/7) 
 		print "Week %d has passed." %((env.now/7)+1)  #announce the current week
 		#have to do a yield, otherwise can't use this as a process to intterupt other process
-		yield env.timeout(0.01)
+		yield env.timeout(0.00000000000000000000000001)
 		for hotel in hc.hotels:
 			print "The money you made from %s so far is %d. " %(hotel.name,hotel.revenue) #announce the money made
 		print "Done weekly report "
