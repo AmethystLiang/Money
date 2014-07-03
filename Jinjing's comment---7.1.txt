@@ -1,9 +1,0 @@
-1. Can work on the math formula of generating customer arrival to make it more reasonable and fits better for the game
-
-3.Working on hotel : 
-	a. added in a customer_flow() function to generate customers for each four types of rooms
-	b. """need to fix the problem that once the simulation stopped before the timeStaying finishes,
-            how could we make sure we're calculating using the right time?.Namely, the transition part between
-            weeks."""
-
-4. fixed update() to reflect the increase of revenue(although not working quite right )

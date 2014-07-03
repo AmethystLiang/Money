@@ -8,5 +8,5 @@ Jinjing's comment -- 7.3
 	c. Still need to get each option working .
 5. fixed the problem that a customer arrival actually didn't alter the number of checked rooms (I used your simpy_rooms instead of the room dictionary)
 
-6.One big problem: the simpy_rooms are not getting the number of rooms correctly from input.Always smaller than the input. don't understand why
+6.One big problem: the simpy_rooms are not getting the number of rooms correctly from input.Always smaller than the input. don't understand why. #Latest version : already fixed this.Just a typo
 
