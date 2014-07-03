@@ -69,7 +69,7 @@ class Hotel:
         print "Your %s is a %s hotel ." %(self.name,self.level)
         for roomtype in self.ROOM_TYPES:
             print "%d out of its %d %s are checked out now" \
-            %(self.simpy_rooms.get(roomtype).count,self.simpy_rooms.get(roomtype).count,roomtype)
+            %(self.simpy_rooms.get(roomtype).count,self.simpy_rooms.get(roomtype).capacity,roomtype)
             print "The money you made from %s so far is %d. " %(self.name,self.revenue) 
 
     
