@@ -22,13 +22,30 @@ def EnterGame():
 def WeeklyReport(env,hc):
 	while G.reported != round(env.now/7) :
 		G.reported = round(env.now/7) 
-		print "Week %d has passed." %((env.now/7)+1)  #announce the current week
+		print "Week %d has passed." %math.ceil(env.now/7)  #announce the current week
 		#have to do a yield, otherwise can't use this as a process to intterupt other process
-		yield env.timeout(0.00000000000000000000000001)
+		yield env.timeout(0.000000000000000001)
 		for hotel in hc.hotels:
-			print "The money you made from %s so far is %d. " %(hotel.name,hotel.revenue) #announce the money made
-		print "Done weekly report "
-		break
+			hotel.str()   #announce the money made, hotel room numbers 
+
+
+
+		print "Would you want to updrade any of your hotel ?"  #ask whether the user wanna upgrade the hotel
+		if Tools.check_confirm("Print Y for yes. Print N to continue playing"):
+			Tools.hotel_upgrade_option()		
+
+		else:
+			pass
+		print "Done weekly report. Starting week %d " %(G.reported+1)
+
+		
+
+
+
+
+
+
+
 
 		
 

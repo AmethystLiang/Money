@@ -49,4 +49,4 @@ if __name__ == '__main__':
     #create a hotel controller
     hc = HC.HotelController(env)
     run(p,hc,env)
-    env.run(until = 20)
+    env.run(until = G.maxTime)

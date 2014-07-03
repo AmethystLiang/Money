@@ -65,18 +65,24 @@ class Hotel:
     
     #need to be fixed later
     #return the string representation of the hotel
-    def _str_(self):
-        return "Your " + self.name + " is a " + self.level + " hotel "
+    def str(self):
+        print "Your %s is a %s hotel ." %(self.name,self.level)
+        for roomtype in self.ROOM_TYPES:
+            print "%d out of its %d %s are checked out now" \
+            %(self.simpy_rooms.get(roomtype).count,self.simpy_rooms.get(roomtype).count,roomtype)
+            print "The money you made from %s so far is %d. " %(self.name,self.revenue) 
+
     
     #the cost for first building a hotel with certain number of rooms
     def initial_cost(self):
         #return the initial cost for buiding the hotel, in thousand representation
-        return self.dic_total_rooms['Queen Standard']*self.room_cost['Queen Standard'] + \
-        self.dic_total_rooms['King Standard']*self.room_cost['King Standard'] + self.dic_total_rooms['Queen Deluxe']*self.room_cost['Queen Deluxe'] +\
-        + self.dic_total_rooms['King Deluxe']*self.room_cost['King Deluxe'] + BUILDING_COST[self.level]
+        return self.simpy_rooms['Queen Standard'].capacity*self.room_cost['Queen Standard'] + \
+        self.simpy_rooms['King Standard'].capacity*self.room_cost['King Standard'] + self.simpy_rooms['Queen Deluxe'].capacity*self.room_cost['Queen Deluxe'] +\
+        + self.simpy_rooms['King Deluxe'].capacity*self.room_cost['King Deluxe'] + BUILDING_COST[self.level]
 
 
 if __name__ == '__main__':
-    
+    env = Environment()
     #testing
-    h = Hotel('Jinjing Garden' ,'Express Inn',6,6,5,5)
+    h = Hotel(env,'Jinjing Garden' ,'Express Inn',6,6,5,5)
+    h.str()

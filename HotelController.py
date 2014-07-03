@@ -76,27 +76,23 @@ class HotelController:
         while (self.env.now < G.maxTime):
             tnow = self.env.now
             #generate a semi-random arrivalrate
-            arrivalrate =  100 + 10 * math.sin(math.pi * tnow/12.0)
-            t = random.expovariate(arrivalrate)
+            arrivalrate =  10 + 1 * math.sin(math.pi * tnow/12.0)
+            #produce a random number that follows an expotential distribution with parameter arrivalrate*2
+            t = random.expovariate(arrivalrate*2)
             #check whether we need to stop while waiting to create another customer
             #Added a check before every yeild report to make sure the weeklyreport doesn't happen during the yield
             if (self.env.now + t) %7 < t :
                 yield self.env.timeout(t-(self.env.now + t) %7)
-                print self.env.now
                 yield self.env.process(Menu.WeeklyReport(self.env,self))
                 yield self.env.timeout((self.env.now + t) %7)
             else :
                 yield self.env.timeout(t)
-           
             #after a random time, generate a new customer
             c = Customer(self.env,"Customer%02d" % (i))
             #the customer stays for a random long time period
             timeStaying = random.expovariate(1.0/G.staytime)
             #call the customer "visit()"method that takes in two arguements
             self.env.process(c.visit_hotel(timeStaying, self))
-            """need to fix the problem that once the simulation stopped before the timeStaying finishes,
-            how could we make sure we're calculating using the right time?.Namely, the transition part between
-            weeks."""
             i += 1
 
 
@@ -104,19 +100,13 @@ class HotelController:
         #need to add generator of customers for more types of rooms
         self.env.process(self.generate())
     
-
-    #don't actually need this,since the resouce part already took care of it    
-    def checkout_a_room(hotel,type):
-        if hotel.checked[type] < hotel.dic_total_rooms[type] : 
-            hotel.checked[type] += 1
-        print "here"
-        hotel.revenue = hotel.revenue + hotel.room_price[type]
         
     #run the simulation
     def run(self,player):
         #create a new hotel
         self.build_new_hotel(player)
         self.update()
+
         
     #get revenue from the simulation
     def update(self):

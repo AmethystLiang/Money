@@ -1,0 +1,12 @@
+Jinjing's comment -- 7.3
+1.Played around and fixed some math numbers to make customer flow more reasonable in our time 
+2.Moved the random number generator to outside the for loop for hotel.So that it's easier to change a hotel.Also, the customer only try once more if they can't find a room type they want in a hotel.This simplifies things.
+3. Added a check_confirm() function in Tools.py to check Y or N input
+4. Adding in more features in WeeklyReport part:
+	a. a summary in Hotel.py to report the number of rooms
+	b. prompt the user to enter option for upgrading (get_option() function in Tools.py)
+	c. Still need to get each option working .
+5. fixed the problem that a customer arrival actually didn't alter the number of checked rooms (I used your simpy_rooms instead of the room dictionary)
+
+6.One big problem: the simpy_rooms are not getting the number of rooms correctly from input.Always smaller than the input. don't understand why
+
