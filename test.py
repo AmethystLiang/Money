@@ -1,7 +1,20 @@
-def foo():
-	print "this is a test"
-	return True
+import math
+from simpy import *
+from Tools import *
+from Menu import *
+import os
 
 
+
+#enviroment test 
+"""env = Environment()
+	env.run(until = 50)
+	print "Week %d has passed." %((env.now/7)+1)"""
+
+#test
 if __name__ == '__main__':
-	print foo()
+	env = Environment()
+	weekly_report_notice(env)
+
+	
+	

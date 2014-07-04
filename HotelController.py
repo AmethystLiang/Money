@@ -1,9 +1,9 @@
+import os
 from Hotel import *
 from Player import *
 from Tools import *
 from simpy import *
 from Customer import *
-from Arrival import *
 from GlobalDeclaration import *  #import global parameters from class G
 import random, math
 import Menu
@@ -39,13 +39,13 @@ class HotelController:
             print "Not a valid input. Please enter a valid input"
             x = check_valid_input(m1)
         #use dictionary to choose hotel from input
-        print x
         type = ('Express Inn',
                 'Holiday Inn',
                 'Three Star',
                 'Four Star',
                 'Five Star'
                 )[x-1]
+        os.system("clear") #clear screen
         print "You choose to build a %s Hotel" %type 
         #name your hotel
         print "Please Name your hotel"
@@ -66,9 +66,11 @@ class HotelController:
         if self.buy_hotel(hotel,player):
             #add the newly built hotel to the array
             self.hotels.append(hotel)
+            os.system("clear")
             print "Conguationlations for having your first %s hotel : %s. The total cost of building the hotel is %s" %(hotel.level,hotel.name,hotel.initial_cost())
         else:
-            return
+            os.system("clear")
+            self.build_new_hotel(player)
 
 
     def generate(self):

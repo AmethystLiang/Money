@@ -22,7 +22,7 @@ class Player:
 	false if the player doesn't have enough money"""
 	def buy_property(self, cost):
 		if self.money < cost:
-			print "You do not have enough money to purchase this." 
+			print "You do not have enough money to purchase this. Please make another choice."
 			return False 
 		else:
 			self.subtract_money(cost)

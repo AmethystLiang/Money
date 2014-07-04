@@ -12,7 +12,7 @@ def check_valid_input(m):
         print "Not a valid input. Please enter a valid input"
         return check_valid_input(m)
 
-
+#need to be fixed
 def check_positive_valid_input(m):
     choice = -1
     try: 
@@ -26,45 +26,41 @@ def check_positive_valid_input(m):
 
 #check whether the input in y or n
 def check_confirm(m):
-    print m 
-    x =raw_input()
-    if x == "y":
-        result = True
-        return result
-    if x == "n":
-        result = False
-        return result 
-    else : 
-        print "Not a valid input. Please enter a valid input"
-        check_confirm(m)
+    choice = get_option(m,['y','n'])
+    if choice == 'y':
+        return True
+    else :
+        return False
+
+#will added in later
+def weekly_report_notice(env):
+    yield env.timeout(0)
+    print "Weekly Report Time"
+   
+    EnterGame("Press enter to continue")
+    os.system("clear") 
+    
+
+#return the option corresponding to the user input. Parameter 
+def get_option(m,options):
+    print m
+    choice = raw_input()
+    for option in options:
+        if choice == str(option):
+            return choice
+    print "Not a valid input. Please enter a valid input"
+    choice = get_option(m,options)
+    return choice
 
 
-#return the input number
-def get_option(m):
-    result = check_positive_valid_input(m)
-    #result is not 1 or 2
-    if result >3 : 
-        print "Not a valid input. Please enter a valid input"
-        result = get_option(m)
-    return result
 
-
-def hotel_upgrade_option():
-    option = get_option("""You have several options:
-Enter 1 to build more rooms in your original hotel. The upper limit for each type of rooms is 50.
-Enter 2 to upgrade your hotel to a higher level. 
-Enter 3 to build a new hotel """)
-    if option == 1:
-        #ToDo: build the actual funtionality for option 1.
-        #for now, just print
-        print "in option 1" 
-    if option == 2:
-        #ToDo: build the actual funtionality for option 2.
-        #for now, just print 
-        print "in option 2"
-    if option == 3: 
-        #build a new hotel
-        print "in option 3"
+def produce_hotel_option(hc):
+    range = []
+    i = 0
+    while i < len(hc.hotels):
+        range.append(i+1)
+        i += 1
+    return range
 
 
 
@@ -76,6 +72,7 @@ def EnterGame(m):
     x = raw_input()
     if x == "":
         #need to add link to next level. Now just an empty action
+        os.system("clear")
         return
     #if press q, then exit the whole program
     if x == "q":
@@ -84,3 +81,7 @@ def EnterGame(m):
     else: 
         print "please press the right key "
         EnterGame(m)
+
+
+
+   

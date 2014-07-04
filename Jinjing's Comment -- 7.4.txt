@@ -1,0 +1,10 @@
+Jinjing's Comment -- 7.4
+1. Fixing the issue that once the customer doesn't have money to buy something, the program just stopped.
+2. Modified the get_option(m,options) method in Tools.py
+3. Created a function produce_hotel_option 
+4. Commented out the print arriving customer thing in Customer.py , for testing purpose
+5.check_positive_input doesn't work perfectly: some negative values can also pass the test
+6. One big challenge is : if we build new hotel rooms, should build another hotel room resources and overwrite the old one ? If so, should we actually stop the use of old rooms from previous customers? 
+7. Added in clearing screen: 
+	import os 
+	and use "os.system("clear")"

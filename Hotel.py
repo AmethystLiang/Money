@@ -39,18 +39,7 @@ class Hotel:
         self.level = level
         """when first build the hotel, no rooms are checked out
             the numbers in the array represent checked QS,KS,QD,KD in sequence"""
-        self.dic_total_rooms = {
-            'Queen Standard':number_of_QS,
-            'King Standard':number_of_KS,
-            'Queen Deluxe': number_of_QD,
-            'King Deluxe': number_of_KD
-            }
-        self.dict_checked_out = {
-            'Queen Standard':0,
-            'King Standard':0,
-            'Queen Deluxe':0,
-            'King Deluxe':0
-            }
+    
         #self.checked = [0,0,0,0]
         self.room_cost = ROOM_COST[level]
         self.room_price = ROOM_PRICE[level]
@@ -70,7 +59,7 @@ class Hotel:
         for roomtype in self.ROOM_TYPES:
             print "%d out of its %d %s are checked out now" \
             %(self.simpy_rooms.get(roomtype).count,self.simpy_rooms.get(roomtype).capacity,roomtype)
-            print "The money you made from %s so far is %d. " %(self.name,self.revenue) 
+        print "The money you made from %s so far is %d. " %(self.name,self.revenue) 
 
     
     #the cost for first building a hotel with certain number of rooms
