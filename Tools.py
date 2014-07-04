@@ -63,10 +63,6 @@ def produce_hotel_option(hc):
     return range
 
 
-
-
-
-
 def EnterGame(m):
     print m
     x = raw_input()

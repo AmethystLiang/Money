@@ -73,14 +73,14 @@ class HotelController:
             self.build_new_hotel(player)
 
 
-    def generate(self):
+    def generate_flow(self):
         i=0
         while (self.env.now < G.maxTime):
-            tnow = self.env.now
+            time_now = self.env.now
             #generate a semi-random arrivalrate
-            arrivalrate =  10 + 1 * math.sin(math.pi * tnow/12.0)
+            arrival_rate =  10 + 1 * math.sin(math.pi * time_now/12.0)
             #produce a random number that follows an expotential distribution with parameter arrivalrate*2
-            t = random.expovariate(arrivalrate*2)
+            t = random.expovariate(arrival_rate*2)
             #check whether we need to stop while waiting to create another customer
             #Added a check before every yeild report to make sure the weeklyreport doesn't happen during the yield
             if (self.env.now + t) %7 < t :
@@ -92,17 +92,12 @@ class HotelController:
             #after a random time, generate a new customer
             c = Customer(self.env,"Customer%02d" % (i))
             #the customer stays for a random long time period
-            timeStaying = random.expovariate(1.0/G.staytime)
+            time_staying = random.expovariate(1.0/G.staytime)
             #call the customer "visit()"method that takes in two arguements
-            self.env.process(c.visit_hotel(timeStaying, self))
+            self.env.process(c.visit_hotel(time_staying, self))
             i += 1
 
 
-    def customer_flow(self,hotel):
-        #need to add generator of customers for more types of rooms
-        self.env.process(self.generate())
-    
-        
     #run the simulation
     def run(self,player):
         #create a new hotel
@@ -112,9 +107,7 @@ class HotelController:
         
     #get revenue from the simulation
     def update(self):
-        #iterate through the list of hotel we have, and create customer_flow for them
-        for hotel in self.hotels:
-            self.customer_flow(hotel)
+        self.env.process(self.generate_flow())
 
 if __name__ == '__main__':
     env = Environment()
