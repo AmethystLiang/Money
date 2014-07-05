@@ -30,7 +30,8 @@ ROOM_PRICE = { 'Express Inn':{'Queen Standard':80, 'King Standard':100, 'Queen D
     for the basic facilities of your hotel.It also influence on the cost of each room. """
 class Hotel:
     #Different Types of hotel rooms
-    ROOM_TYPES = ('Queen Standard', 'King Standard', 'Queen Deluxe', 'King Deluxe')
+    ROOM_TYPES = ['Queen Standard', 'King Standard', 'Queen Deluxe', 'King Deluxe']
+    HOTEL_TYPES = ['Express Inn', 'Holiday Inn', 'Three Star','Four Star','Five Star']
 
     #constructor
     def __init__(self,env,name,level,number_of_QS,number_of_KS,number_of_QD,number_of_KD):
@@ -44,12 +45,16 @@ class Hotel:
         self.room_cost = ROOM_COST[level]
         self.room_price = ROOM_PRICE[level]
         self.revenue = 0
-        #TESTING BELOW FOR SIMPY#
+        self.init_room_number = { 
+            'Queen Standard': number_of_QS,
+            'King Standard': number_of_KS,
+            'Queen Deluxe': number_of_QD,
+            'King Deluxe': number_of_KD}
         self.simpy_rooms = {
-            'Queen Standard':Resource(env, number_of_QS),
-            'King Standard':Resource(env, number_of_KS),
-            'Queen Deluxe': Resource(env, number_of_QD),
-            'King Deluxe': Resource(env, number_of_KD)
+            'Queen Standard':Container(env, init=number_of_QS,capacity = 50),
+            'King Standard':Container(env, init=number_of_KS,capacity = 50),
+            'Queen Deluxe': Container(env, init=number_of_QD,capacity = 50),
+            'King Deluxe': Container(env, init=number_of_KD,capacity = 50)
             }
     
     #need to be fixed later
@@ -58,16 +63,16 @@ class Hotel:
         print "Your %s is a %s hotel ." %(self.name,self.level)
         for roomtype in self.ROOM_TYPES:
             print "%d out of its %d %s are checked out now" \
-            %(self.simpy_rooms.get(roomtype).count,self.simpy_rooms.get(roomtype).capacity,roomtype)
+            %(self.simpy_rooms.get(roomtype).level,self.init_room_number[roomtype],roomtype)
         print "The money you made from %s so far is %d. " %(self.name,self.revenue) 
 
     
     #the cost for first building a hotel with certain number of rooms
     def initial_cost(self):
         #return the initial cost for buiding the hotel, in thousand representation
-        return self.simpy_rooms['Queen Standard'].capacity*self.room_cost['Queen Standard'] + \
-        self.simpy_rooms['King Standard'].capacity*self.room_cost['King Standard'] + self.simpy_rooms['Queen Deluxe'].capacity*self.room_cost['Queen Deluxe'] +\
-        + self.simpy_rooms['King Deluxe'].capacity*self.room_cost['King Deluxe'] + BUILDING_COST[self.level]
+        return self.init_room_number['Queen Standard']*self.init_room_number['Queen Standard'] + \
+        self.init_room_number['King Standard']*self.init_room_number['King Standard'] + self.init_room_number['Queen Deluxe']*self.room_cost['Queen Deluxe'] +\
+        + self.init_room_number['King Deluxe']*self.room_cost['King Deluxe'] + BUILDING_COST[self.level]
 
 
 if __name__ == '__main__':

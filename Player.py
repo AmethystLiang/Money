@@ -1,9 +1,12 @@
+from GlobalDeclaration  import *
+import os
+
 """an instance of a player for the game."""
 class Player:
 	#constructor :
 	def __init__(self,name):
 		self.name = name 
-		self.money = 500000
+		self.money = G.player_initial_money
 
 
 	def get_money(self):
@@ -20,13 +23,15 @@ class Player:
 
 	"""return True if the player has enough money to buy the property and deduct money from the player.Return
 	false if the player doesn't have enough money"""
-	def buy_property(self, cost):
+	def buy_property(self, cost,m):
 		if self.money < cost:
-			print "You do not have enough money to purchase this. Please make another choice."
+			os.system("clear")
+			print m
 			return False 
 		else:
 			self.subtract_money(cost)
 			print "Propety purchased"
+			print "You now have %d dollars" %self.money
 			return True 
 			
 

@@ -40,7 +40,7 @@ year = 2014
 #run the world 
 if __name__ == '__main__':
     #greetings 
-    print "Welcome to Neil's World! " + '\n'+  "Make your own fortune to buy Jinjing a BMW ~ " 
+    
     #Option to enter the game or not 
     Menu.EnterGame()
     p = Player.Player('Neil')

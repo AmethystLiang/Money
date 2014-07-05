@@ -47,7 +47,7 @@ class Customer():
             #after two tries, will just give up and go to another hotel
             for i in xrange(2): #only have two tries
                 room_type = Hotel.ROOM_TYPES[rand_type_number]
-                if (hotel.simpy_rooms[room_type].capacity - hotel.simpy_rooms[room_type].count) > 0:
+                if hotel.simpy_rooms[room_type].level > 0:
                     room_type = Hotel.ROOM_TYPES[rand_type_number]
                     return [hotel, room_type]
                 rand_type_number += adder
@@ -59,7 +59,7 @@ class Customer():
 
     #for hotel customer, the stay_duration is how many days they'll stay in a hotel room.
     #Also need to add in the type of room that they're checking in, etc. Namely, more complicated features that works in Hotel Model 
-    def visit_hotel(self, stay_duration, hc):
+    def visit_hotel(self, stay_duration, hc,player):
         """wait in line and get the resource.
         For reference,see http://simpy.readthedocs.org/en/latest/simpy_intro/shared_resources.html"""
         #randomly sample and select a hotel
@@ -70,15 +70,15 @@ class Customer():
             hotel = hotel_room_array[0]
             roomtype = hotel_room_array[1]
             #may need to change here to reflect that customers leave once they can't find a room
-            with hotel.simpy_rooms[roomtype].request() as req:
-                yield req
-                print "%s arrives at %d" %(self.name,self.env.now)
-                #Added a check before every yeild report to make sure the weeklyreport doesn't happen during the yield
-                if (self.env.now + math.ceil(stay_duration) ) %7 < math.ceil(stay_duration) :
-                    yield self.env.timeout(math.ceil(stay_duration)-(self.env.now + math.ceil(stay_duration)) %7)
-                    yield self.env.process(Menu.WeeklyReport(self.env,hc))
-                    yield self.env.timeout((self.env.now + math.ceil(stay_duration)) %7)
-                else :
-                    yield self.env.timeout(math.ceil(stay_duration))
-                print "%s leaves at %d" %(self.name,self.env.now)
-                hotel.revenue += hotel.room_price[roomtype]*math.ceil(stay_duration) #math.ceil(),get the upper rounded number
+            print "%s arrives at %d" %(self.name,self.env.now)
+            yield hotel.simpy_rooms[roomtype].get(1)
+            #Added a check before every yeild report to make sure the weeklyreport doesn't happen during the yield
+            if (self.env.now + math.ceil(stay_duration) ) %7 < math.ceil(stay_duration) :
+                yield self.env.timeout(math.ceil(stay_duration)-(self.env.now + math.ceil(stay_duration)) %7)
+                yield self.env.process(Menu.WeeklyReport(self.env,hc,player))
+                yield self.env.timeout((self.env.now + math.ceil(stay_duration)) %7)
+            else :
+                yield self.env.timeout(math.ceil(stay_duration))
+            yield hotel.simpy_rooms[roomtype].put(1)
+            print "%s leaves at %d" %(self.name,self.env.now)
+            hotel.revenue += hotel.room_price[roomtype]*math.ceil(stay_duration) #math.ceil(),get the upper rounded number

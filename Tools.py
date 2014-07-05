@@ -62,6 +62,21 @@ def produce_hotel_option(hc):
         i += 1
     return range
 
+def Continue():
+    print "Press Enter to continue.Press q to exit the game"
+    x = raw_input()
+    if x == "":
+        #need to add link to next level. Now just an empty action
+        os.system("clear")
+        return
+    #if press q, then exit the whole program
+    if x == "q":
+        sys.exit()
+    #if the keypress is not "ENTER", print the prompt again
+    else: 
+        print "please press the right key "
+        Continue()
+
 
 def EnterGame(m):
     print m
@@ -78,6 +93,9 @@ def EnterGame(m):
         print "please press the right key "
         EnterGame(m)
 
-
+def upgrade_option(hotel):
+    type = hotel.HOTEL_TYPES.index(hotel.level)
+    upgrade_type = hotel.HOTEL_TYPES[type+1:]
+    return upgrade_type
 
    

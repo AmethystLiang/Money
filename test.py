@@ -13,8 +13,11 @@ import os
 
 #test
 if __name__ == '__main__':
-	env = Environment()
-	weekly_report_notice(env)
+	a = [1,2,3,4,5,6,7,8]
+	b = a[8:]
+	print b
+	print a
+	
 
 	
 	
