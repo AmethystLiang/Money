@@ -3,13 +3,12 @@
 from Hotel import *
 
 
-
 #super class of different kinds of bank account 
 class Account:
-	def __init__(self,id,initial_balance):
+	def __init__(self,player,initial_balance):
 		self.balance = initial_balance
 		#id is a 7 digit number
-		self.id = id 
+		self.player = player 
 
 
 	def save(self,amount):
@@ -28,8 +27,9 @@ class Account:
 
 #add in the accout features so that characters can manage their money like in real life
 class SavingAccount(Account):
-	def __init__(self,id,initial_balance):
+	def __init__(self,id,initial_balance,env):
 	    Account.__init__(self,id,initial_balance)
+	    print " A saving account has been created for you"
 	    self.count = 3
 
 

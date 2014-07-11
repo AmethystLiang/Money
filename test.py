@@ -1,3 +1,5 @@
+
+#from __future__ import division  # to allow fraction division
 import math
 from simpy import *
 from Tools import *
@@ -13,10 +15,7 @@ import os
 
 #test
 if __name__ == '__main__':
-	a = [1,2,3,4,5,6,7,8]
-	b = a[8:]
-	print b
-	print a
+	print 17/100.00
 	
 
 	

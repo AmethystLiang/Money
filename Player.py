@@ -6,8 +6,16 @@ class Player:
 	#constructor :
 	def __init__(self,name):
 		self.name = name 
-		self.money = G.player_initial_money
+		self.checking_account = 0
+		self.saving_account = 0
+		self.credit = G.intial_player_credit
+		self.loan = 0 #represent the loan you have to repay
 
+
+	def set_bank_account(self,checking_account,saving_account):
+		self.checking_account = checking_account
+		self.saving_account = saving_account
+		
 
 	def get_money(self):
 		return self.money

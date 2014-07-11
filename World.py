@@ -43,6 +43,7 @@ if __name__ == '__main__':
     
     #Option to enter the game or not 
     Menu.EnterGame()
+    
     p = Player.Player('Neil')
     #An event that may happen at some point in time.
     env = Environment()

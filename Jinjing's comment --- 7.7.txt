@@ -1,0 +1,9 @@
+Jinjing's comment --- 7.7:
+1. Player should has an attribute to hold bank account
+
+2. Should add a credit attribute to Player class. If you ever turned down a customer, your credit might get harmed.
+Credit also influences customer flow
+3. need to charge transaction fee if transfer moeny from saving to check
+4. Added bank loan interest calculation. Might need to make it higher than real life / or make making money harder, so that it's not always good to loan money from bank
+5. Set a countdown in GlobalDeclaration : tillPay to keep track of the time when the player has to pay back money from the bank. Each weekly report should remind the user to be prepared to pay back the money
+6. Thinking about saving player money gain record to CVS file 
