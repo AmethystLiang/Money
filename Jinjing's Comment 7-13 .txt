@@ -1,0 +1,17 @@
+Jinjing's Comment 7-13 :
+1. Use urllib package 
+2. file = "downloaded_file.html"
+
+	
+
+	#open the file for writing
+	fh = open(file, "w")
+
+	# read from request while writing to file
+	fh.write('1,2345sjdhfgkhask')
+	fh.close()
+
+	write to file
+
+	or # You can also use the with statement:
+"with open(file, 'w') as f: f.write(response.read())"

@@ -1,0 +1,12 @@
+Retrieve data from online to simulate stock price change 
+
+USing http://spring.io/blog/2010/08/19/building-rabbitmq-apps-using-python/ RabbitMQ kinda of thing 
+
+Mutual Funds 
+
+Commodity
+
+Derivatives 
+
+
+Could also issue stocks or bond for our own business (once it reaches a certain scale), and stimulates how it will be in stock market 

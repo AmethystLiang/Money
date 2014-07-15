@@ -1,22 +1,12 @@
-
-#from __future__ import division  # to allow fraction division
-import math
-from simpy import *
-from Tools import *
-from Menu import *
-import os
+import urllib
+import datetime
+from Stock import *
+# Note that the rstrip strips the trailing newlines and carriage returns before
+# printing the output.
 
 
 
-#enviroment test 
-"""env = Environment()
-	env.run(until = 50)
-	print "Week %d has passed." %((env.now/7)+1)"""
-
-#test
 if __name__ == '__main__':
-	print 17/100.00
-	
-
-	
-	
+ 	STOCKS = {'GE':0,'MSFT':0,'WMT':0,'TM':0,'BAC':0,'JPM':0,'INTC':0,'CSCO':0}
+ 	for key in STOCKS.keys():
+ 		print key

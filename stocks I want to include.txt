@@ -1,0 +1,30 @@
+1. For stocks : 
+	TICKER NAME
+	DIV per share
+	Price/Earnings Ratio - This is calculated by dividing the current stock price by earnings per share from the last four quarters. For more detail on how to interpret this, see our P/E Ratio tutorial. 
+	TRading volums 
+	Day high and Low
+
+
+http://www.nebraskacouncil.org/smg/documents/Top%202000%20Valued%20Companies%20with%20Ticker%20Symbols.pdf
+stocks I want to include : 
+1. CBS Coorporation
+2.General Electric GE
+3. McDonald's 
+4. Citigroup 	C
+Coca-Cola Company (The)  KO
+Microsoft 	MSFT
+WalMart Stores, INC   WMT
+Toyota Motor Corporation   TM
+Bank of America Corporation BAC
+J.P. Morgan Chase & Co.   JPM
+Intel Corporation   INTC
+Cisco Systems, Inc.   CSCO
+AT&T Inc.     T
+Pepsico, Inc.  PEP
+Verizon Communications Inc   VZ
+Google Inc.   GOOG
+Time Warner Inc.   TWX
+Dell Inc.     DELL
+Morgan Stanley   MS
+Apple Computer, Inc.   AAPL

@@ -10,7 +10,7 @@ class Player:
 		self.saving_account = 0
 		self.credit = G.intial_player_credit
 		self.loan = 0 #represent the loan you have to repay
-
+		self.money = 500000
 
 	def set_bank_account(self,checking_account,saving_account):
 		self.checking_account = checking_account
