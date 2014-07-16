@@ -1,0 +1,28 @@
+1. changed Menu into a class
+2. find one bug , make the container capacity 50, need to check than when entering room numbers, other wise wil cause an error:
+
+"Traceback (most recent call last):
+  File "World.py", line 59, in <module>
+    run(p,hc,sc,menu)
+  File "World.py", line 27, in run
+    hc.run(player,menu)
+  File "/Users/JinjingLiang/Documents/Summer Project/Money/HotelController.py", line 116, in run
+    self.build_new_hotel(player)
+  File "/Users/JinjingLiang/Documents/Summer Project/Money/HotelController.py", line 75, in build_new_hotel
+    hotel = Hotel(self.env,name,type,QS,QD,KS,KD)
+  File "/Users/JinjingLiang/Documents/Summer Project/Money/Hotel.py", line 55, in __init__
+    'King Standard':Container(env, init=number_of_KS,capacity = 50),
+  File "/Library/Python/2.7/site-packages/simpy-3.0.5-py2.7.egg/simpy/resources/container.py", line 69, in __init__
+    raise ValueError('"init" must be <= "capacity".')
+ValueError: "init" must be <= "capacity". ""
+
+3. Added in the buyStock() part 
+	Still need to add in the bank part
+
+
+4. Break down WeeklyReport() function to subfunctions
+
+5. Pay back loans at the beginning of every weekly report (use payloan function)
+has a count in every weekly report to count how many weeks it is till paying back the loan
+
+6. Still need to integrate the CREDIT part more into the game

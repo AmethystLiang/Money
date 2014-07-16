@@ -6,7 +6,7 @@ from simpy import *
 from Customer import *
 from GlobalDeclaration import *  #import global parameters from class G
 import random, math
-import Menu
+from Menu import *
 
 
 #messages to be chosed to put before asking user to give an input
@@ -18,18 +18,19 @@ m2 = 'Enter your number :'
 """
 class HotelController:
     #create an array of hotel objects
-    def __init__(self,env):
+    def __init__(self,env,player):
         self.hotels = []
         self.env = env
+        self.player = player
 
     #helper funcition for "build_new_hotel(self,player)"
-    def buy_hotel(self,hotel,player):
-        a = player.buy_property(hotel.initial_cost(),"You do not have enough money to purchase this. Please make another choice.")
+    def buy_hotel(self,hotel):
+        a = self.player.buy_property(hotel.initial_cost(),"You do not have enough money to purchase this. Please make another choice.")
         return a 
 
 
-    def build_new_hotel(self,player):
-        print "The money you have now is %d" %player.money
+    def build_new_hotel(self):
+        print "The money you have now is %d" %self.player.checking_account.balance
         print "Press 1 for Express Inn .The cost is 100000" + '\n' + "Press 2 for Holiday Inn. The cost is 150000" 
         print "Press 3 for Three Star Hotel.The cost is 200000" + '\n' + "Press 4 for Four Star Hotel.The cost is 250000"
         print "Press 5 for Five Star Hotel.The cost is 350000 " 
@@ -49,14 +50,14 @@ class HotelController:
         os.system("clear") #clear screen
         print "You choose to build a %s Hotel" %type 
         print "It will cost %d for the building. " %BUILDING_COST[type]
-        print "The money you'll have if build this building is %d dollars" %(player.money-BUILDING_COST[type])
-        if BUILDING_COST[type]>player.money : 
+        print "The money you'll have if build this building is %d dollars" %(self.player.checking_account.balance-BUILDING_COST[type])
+        if BUILDING_COST[type]>self.player.checking_account.balance: 
             os.system("clear")
             if type == 'Express Inn':
                 print "You can't afforf to build any hotel now"
                 return
             print "You can't afford to build hotel of this type"
-            self.build_new_hotel(player)
+            self.build_new_hotel()
             return
         #name your hotel
         print "Please Name your hotel"
@@ -76,16 +77,16 @@ class HotelController:
         print hotel.initial_cost()
         #actually buy the hotel object created
         os.system("clear")
-        if self.buy_hotel(hotel,player):
+        if self.buy_hotel(hotel):
             #add the newly built hotel to the array
             self.hotels.append(hotel)
             print "Conguationlations for having your %s hotel : %s. The total cost of building the hotel is %s" %(hotel.level,hotel.name,hotel.initial_cost())
         else:
-            self.build_new_hotel(player)
+            self.build_new_hotel()
            
 
 
-    def generate_flow(self,player):
+    def generate_flow(self,menu):
         i=0
         while (self.env.now < G.maxTime):
             time_now = self.env.now
@@ -97,7 +98,7 @@ class HotelController:
             #Added a check before every yeild report to make sure the weeklyreport doesn't happen during the yield
             if (self.env.now + t) %7 < t :
                 yield self.env.timeout(t-(self.env.now + t) %7)
-                yield self.env.process(Menu.WeeklyReport(self.env,self,player))
+                yield self.env.process(menu.WeeklyReport())
                 yield self.env.timeout((self.env.now + t) %7)
             else :
                 yield self.env.timeout(t)
@@ -106,21 +107,21 @@ class HotelController:
             #the customer stays for a random long time period
             time_staying = random.expovariate(1.0/G.staytime)
             #call the customer "visit()"method that takes in two arguements
-            self.env.process(c.visit_hotel(time_staying, self,player))
+            self.env.process(c.visit_hotel(time_staying,self,self.player,menu))
             i += 1
 
 
     #run the simulation
-    def run(self,player):
+    def run(self,menu):
         #create a new hotel
-        self.build_new_hotel(player)
+        self.build_new_hotel()
         Continue()
-        self.update(player)
+        self.update(menu)
 
         
     #get revenue from the simulation
-    def update(self,player):
-        self.env.process(self.generate_flow(player))
+    def update(self,menu):
+        self.env.process(self.generate_flow(menu))
 
 if __name__ == '__main__':
     env = Environment()

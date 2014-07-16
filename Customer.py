@@ -2,7 +2,7 @@ import math, random
 from Hotel import *
 """ bank01_OO: The single non-random Customer """
 from simpy import *  
-import Menu
+from Menu import *
 from HotelController import *
 from GlobalDeclaration import *
 
@@ -59,7 +59,7 @@ class Customer():
 
     #for hotel customer, the stay_duration is how many days they'll stay in a hotel room.
     #Also need to add in the type of room that they're checking in, etc. Namely, more complicated features that works in Hotel Model 
-    def visit_hotel(self, stay_duration, hc,player):
+    def visit_hotel(self, stay_duration,hc,player,menu):
         """wait in line and get the resource.
         For reference,see http://simpy.readthedocs.org/en/latest/simpy_intro/shared_resources.html"""
         #randomly sample and select a hotel
@@ -70,15 +70,18 @@ class Customer():
             hotel = hotel_room_array[0]
             roomtype = hotel_room_array[1]
             #may need to change here to reflect that customers leave once they can't find a room
-            print "%s arrives at %d" %(self.name,self.env.now)
+            print "%s arrives at time %d at %s " %(self.name,self.env.now,hotel.name)
             yield hotel.simpy_rooms[roomtype].get(1)
             #Added a check before every yeild report to make sure the weeklyreport doesn't happen during the yield
             if (self.env.now + math.ceil(stay_duration) ) %7 < math.ceil(stay_duration) :
                 yield self.env.timeout(math.ceil(stay_duration)-(self.env.now + math.ceil(stay_duration)) %7)
-                yield self.env.process(Menu.WeeklyReport(self.env,hc,player))
+                yield self.env.process(menu.WeeklyReport())
                 yield self.env.timeout((self.env.now + math.ceil(stay_duration)) %7)
             else :
                 yield self.env.timeout(math.ceil(stay_duration))
             yield hotel.simpy_rooms[roomtype].put(1)
-            print "%s leaves at %d" %(self.name,self.env.now)
+            print "%s leaves at time %d from %s" %(self.name,self.env.now,hotel.name)
             hotel.revenue += hotel.room_price[roomtype]*math.ceil(stay_duration) #math.ceil(),get the upper rounded number
+
+
+

@@ -52,8 +52,11 @@ class Account:
 
 
     def withdraw(self,amount):
-        if balance >= amount :
+        if self.balance >= amount :
             self.balance = self.balance - amount
+        else :
+            print "not enough money"
+            return
 
 
     #to be implemented
@@ -79,39 +82,14 @@ will implement more complicated interest rate feature, now will only use simple 
 
 return the interest if you save your money for a certain period of time (the unit for time is month)"""
 
-#should also make sure that if it's only saved for 3 month, it's free to withdraw after 3 months.
-    def addInterest(self,time):
-        #the basci framework refelecting the different interest rate in different saving time period
-        #will add in interest for longer time, e.g : 3 yrs, 5 yrs
-        #if only save for less than 3 months, the interest rate is 1 % 
-        if time <= 3:
-            self.balance = self.balance*(1+0.01*time)
-        #half a year interest rate
-        if time > 3 & time <= 6:
-            self.balance = self.balance*(1+0.05*time)
-        if time >6 & time <= 12:
-            self.balance = self.balance*(1+0.1*time)
 
-    """saving account has a withdraw limit of 3 per month"""
-    def withdraw(self,amount):
-        #need to find a way to reset count every month
-        if self.count <= 3:
-            self.balane = self.balance - amount
-        else:
-            print "out of withdraw chances"
-            #will implement a way to continue withdraw with some transaction fee
-
-
-
-
-
-#simulate an ATM for a checking account
 class CheckingAccount(Account):
     def __init__(self,initial_balance,env):
         Account.__init__(self,initial_balance,env)
         print " A checking account has been created for you"
 
-
+    def withdraw_from_checking(self,amount):
+        self.withdraw(amount) #use the money from checking account directly
 
 if __name__ == '__main__':
     #test

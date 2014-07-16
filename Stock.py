@@ -21,11 +21,14 @@ except ImportError:
     from urllib2 import Request, urlopen
     from urllib import urlencode
 
+import simpy
+
 class Stock:
 
     def __init__(self, __symbol):
         self.symbol = __symbol
         self.purchased = 0
+        self.amount = 0
     def __request(self, stat):
         url = 'http://finance.yahoo.com/d/quotes.csv?s=%s&f=%s' % (self.symbol, stat)
         return urlopen(url).read().strip().strip('"')
@@ -88,8 +91,16 @@ class Stock:
 
     Returns a nested dictionary (dict of dicts).
     outer dict keys are dates ('YYYYMMDD')
-
-    """ 
+ 
+        url = 'http://ichart.yahoo.com/table.csv?s=%s&' % self.symbol + \
+              'd=%s&' % str(int(end_date[5:7]) - 1) + \
+              'e=%s&' % str(int(end_date[8:10])) + \
+              'f=%s&' % str(int(end_date[0:4])) + \
+              'g=d&' + \
+              'a=%s&' % str(int(start_date[5:7]) - 1) + \
+              'b=%s&' % str(int(start_date[8:10])) + \
+              'c=%s&' % str(int(start_date[0:4])) + \
+              'ignore=.csv'"""
         params = urlencode({
         's': self.symbol,
         'a': int(start_date[5:7]) - 1,
@@ -101,13 +112,16 @@ class Stock:
         'g': 'd',
         'ignore': '.csv',
         })
+        # http://ichart.yahoo.com/table.csv?s=<string>&a=<int>&b=<int>&c=<int>&d=<int>&e=<int>&f=<int>&g=d&ignore=.csv
+        # http://ichart.yahoo.com/table.csv?a=0&ignore=.csv&s=GE&b=1&e=1&d=0&g=d&f=2004&c=2004
         url = 'http://ichart.yahoo.com/table.csv?%s' % params
         days = urlopen(url).readlines()
-        print days
         data = [day[:-2].split(',') for day in days]
         price = (float(data[1][1]) + float(data[1][2]))/2
         return price
 
 
 if __name__ == '__main__':
-    main()
+    stock = Stock('GE')
+    print stock.get_historical_prices('2003-08-19','2003-08-19')
+

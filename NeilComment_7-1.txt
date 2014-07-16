@@ -1,7 +1,0 @@
-
-            hc.build_new_hotel(player)
-So, after '10' units of time, it asks the player to build another hotel.
-This will need some tweaking as I'm not sure long a week is
-
-Other Needed Changes:
-Need to modify so that hotels are choosens randomly and that the rooms are choosen randomly but if full they move in the order that we talked about

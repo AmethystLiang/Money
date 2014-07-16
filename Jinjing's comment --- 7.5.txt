@@ -1,4 +1,0 @@
-Jinjing's comment --- 7.5 
-1. Using Container in replace of Resource to be able to change hotel rooms
-2. Moved player money to GlobalDelaration module
-3.Problem: some random customers appear in weekly review

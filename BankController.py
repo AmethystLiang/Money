@@ -6,7 +6,7 @@ from Player import *
 from GlobalDeclaration import *
 from Tools import *
 
-class BankController():
+class BankController:
     """This bank simulates a bank. Customers can go into the bank and carry out transactions"""
     def __init__(self, env, player):
         self.env = env
@@ -20,17 +20,16 @@ class BankController():
         checking_account = CheckingAccount(G.player_initial_money,self.env) # a checking acount 
         saving_account = SavingAccount(G.player_initial_money,self.env) # a saving account 
         self.player.set_bank_account(checking_account,saving_account) #give the above accounts to the player
-        self.bank = Bank(player) #set up the bank
+        self.bank = Bank(self.player) #set up the bank
 
-    def withdraw_from_checking(player,amount):
-        player.checking_account.withdraw(amount) #use the money from checking account directly
+    
 
 
     def checking_to_saving(self):
         print "You're transfering money from your checking account to your saving account. "
         while True: 
             time = check_positive_valid_input("Please enter the time you keep money in your saving account? Units are in months."+'\n'\
-                +"Please note you can't loan money for less than a month")
+                +"Please note you can't save money for less than a month")
             if not (time/1 <1 ):
                 break
             print "Please enter a valid input."   
@@ -40,7 +39,7 @@ class BankController():
         if wanna_save : 
             amount = self.bank.money  #initialize amount to enter with a large number to make sure we'll be in while loop
             while amount > self.player.checking_account.balance : 
-                amount = check_positive_valid_input("Please enter the amount you want to loan from the bank ? ")
+                amount = check_positive_valid_input("Please enter the amount you want to keep in saving account : ")
                 if amount < self.player.checking_account.balance:
                     break
                 print "Please enter the right input."
