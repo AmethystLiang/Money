@@ -29,6 +29,9 @@ class Stock:
         self.symbol = __symbol
         self.purchased = 0
         self.amount = 0
+        self.price = 0
+
+
     def __request(self, stat):
         url = 'http://finance.yahoo.com/d/quotes.csv?s=%s&f=%s' % (self.symbol, stat)
         return urlopen(url).read().strip().strip('"')

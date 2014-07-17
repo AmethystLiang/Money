@@ -46,8 +46,11 @@ class Menu:
             print "Week %d has passed." %math.ceil(G.reported)  #announce the current week
             #hand control back to simpy
             self.revenue_report()
-            if G.tillPay == 0 :
+            #check if we need to pay back loan
+            if G.tillPay == 0  and self.player.loan != 0:
                 self.bc.pay_loan() #has to pay loan before doing other stuff
+            if G.tillWithdraw !=0 :
+                G.tillWithdraw -= 0 
             while True:
                 choice = int(Tools.get_option("Enter 1 for hotel upgrade. Enter 2 to check out bank. Enter 3 to check out stock.Enter 4 to skip and continue.",[1,2,3,4]))
                 os.system("clear") #clear screen
@@ -57,7 +60,7 @@ class Menu:
                     #ToDo : add in the bank part 
                     yield self.env.process(self.bank_business())
                 if choice == 3:
-                    self.sc.buyStock()
+                    yield self.env.process(self.stock_business())
                 if choice == 4 :
                     break
             G.tillPay -= 1   #loan payment countdown
@@ -173,18 +176,40 @@ class Menu:
         os.system("clear")
         print "Welcome to Jinjing's Bank!"
         while True :
+            self.bc.check_checking()
+            self.bc.check_saving()
             choice1 = int(Tools.get_option("""Enter 1 to tranfer money from cheking account to saving account.
         Enter 2 to transfer money from saving account to checking account.
         Enter 3 to loan money from bank.
         Enter 4 to exit.""",[1,2,3,4]))
             if choice1 == 1:
+                os.system("clear")
                 self.bc.checking_to_saving()
             if choice1 == 2:
+                os.system("clear")
                 self.bc.saving_to_checking()
             if choice1 == 3 :
+                os.system("clear")
                 self.bc.loan()
             if choice1 == 4 :
                 break
+        yield self.env.timeout(0)
 
-
-
+    def stock_business(self):
+        os.system("clear")
+        print "Welcome to Jinjing's stock exchange center ! "
+        print "The stocks you currently own are :"
+        for ticker in self.sc.update_purchase().keys():
+            print ticker
+        while True: 
+            choice = int(Tools.get_option("""
+    Enter 1 to buy stock.
+    Enter 2 to sell stock.
+    Enter 3 to exit. """,[1,2,3]))
+            if choice == 1 :
+                self.sc.buyStock()
+            if choice == 2 :
+                self.sc.sellStock()
+            if choice == 3:
+               break
+        yield self.env.timeout(0)

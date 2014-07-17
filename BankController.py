@@ -18,7 +18,7 @@ class BankController:
 
     def setup(self):
         checking_account = CheckingAccount(G.player_initial_money,self.env) # a checking acount 
-        saving_account = SavingAccount(G.player_initial_money,self.env) # a saving account 
+        saving_account = SavingAccount(0,self.env) # a saving account 
         self.player.set_bank_account(checking_account,saving_account) #give the above accounts to the player
         self.bank = Bank(self.player) #set up the bank
 
@@ -45,7 +45,7 @@ class BankController:
                 print "Please enter the right input."
             self.player.checking_account.withdraw(amount) #first, withdraw the money from checking account
             self.player.saving_account.save(amount) #then put it in saving account 
-            G.tillWithdraw = time   #set the countdown
+            G.tillWithdraw = time*4   #set the countdown
             self.bank.interest = amount * interest_rate
         else : 
             return
@@ -111,12 +111,14 @@ class BankController:
             self.player.credit -= deduct   #deduct credit based on how much you couldn't repaly
 
         
-        def check_checking_balance(self):
-            print "Your checking account balance is %d dollars. " %self.player.checking_account.balance 
+    def check_checking(self):
+        print "Your checking account balance is %d dollars. " %self.player.checking_account.balance 
 
 
-        def check_saving_balance(self):
-            print "Your saving account balance is %d dollars. " %self.player.saving_account.balance       
+    def check_saving(self):
+        print "Your saving account balance is %d dollars. " %self.player.saving_account.balance   
+        if self.player.saving_account.balance  != 0:
+            print "You have %d weeks till withdraw the money." %G.tillWithdraw  
         
 
 

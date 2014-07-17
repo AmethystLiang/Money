@@ -1,7 +1,7 @@
 #input check reference: http://learnpythonthehardway.org/book/ex48.html
 from simpy import *
 from HotelController import *
-
+import datetime
 
 #check valid int input
 def check_valid_input(m):
@@ -98,4 +98,9 @@ def upgrade_option(hotel):
     upgrade_type = hotel.HOTEL_TYPES[type+1:]
     return upgrade_type
 
+
+def current_date(start_date,env):
+    date_collapsed = datetime.timedelta(days=env.now*7) #calculate how many days have passed since the start date
+    current_date = str(start_date + date_collapsed) 
+    return current_date
    

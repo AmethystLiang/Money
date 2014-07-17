@@ -11,5 +11,5 @@ class G:
     loan_interest_rate = 0.06  # monthlystated loan interest rate.
     save_interest_rate = 0.04  # monthlystated save interest rate.
     tillPay = 0  #time in unit of weeks representing how long it remains for you to pay back the loan
-    tillWithdraw = 0 # time in unit of months representing how long it remains to take out money from saving account 
+    tillWithdraw = 0 # time in unit of weeks representing how long it remains to take out money from saving account 
   
