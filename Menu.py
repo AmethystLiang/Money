@@ -47,10 +47,14 @@ class Menu:
             #hand control back to simpy
             self.revenue_report()
             #check if we need to pay back loan
+            print G.tillPay
+            print self.player.loan
             if G.tillPay == 0  and self.player.loan != 0:
                 self.bc.pay_loan() #has to pay loan before doing other stuff
             if G.tillWithdraw !=0 :
-                G.tillWithdraw -= 0 
+                G.tillWithdraw -= 1 
+            if G.tillPay != 0:
+                G.tillPay -= 1   #loan payment countdown
             while True:
                 choice = int(Tools.get_option("Enter 1 for hotel upgrade. Enter 2 to check out bank. Enter 3 to check out stock.Enter 4 to skip and continue.",[1,2,3,4]))
                 os.system("clear") #clear screen
@@ -63,7 +67,7 @@ class Menu:
                     yield self.env.process(self.stock_business())
                 if choice == 4 :
                     break
-            G.tillPay -= 1   #loan payment countdown
+            
             print "Done weekly report." +'\n' + "Starting week %d " %(G.reported+1)
             Tools.Continue()
     

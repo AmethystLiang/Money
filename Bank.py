@@ -11,8 +11,6 @@ class Bank:
     def __init__(self,player):
         self.money = G.bankMoney
         self.player = player
-        self.interest = 0   #represent interest rate for saving account
-
     #parameter time has unit in month, and interest is counpounded by-weekly 
     #Loan interest rate also taken the player's credit into account. They higher the player credit,the lower the interest rate
     # see http://en.wikipedia.org/wiki/Compound_interest
@@ -69,7 +67,8 @@ class SavingAccount(Account):
     def __init__(self,initial_balance,env):
         Account.__init__(self,initial_balance,env)
         print " A saving account has been created for you"
-        self.interest = 0
+        self.interest = 0  #initialize interest
+        self.interest_rate = 0 #initialize interest rate
 
 
 class CheckingAccount(Account):
@@ -89,7 +88,7 @@ if __name__ == '__main__':
     player.set_bank_account(checking_account,saving_account)
     bank = Bank(player)
 
-    print bank.loan_interest_rate(1)
+    print bank.interest_rate(1,True)
 
 
 

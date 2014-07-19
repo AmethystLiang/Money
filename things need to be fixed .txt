@@ -1,0 +1,3 @@
+1.take care of the withdraw of savign part 
+2. buystock option should be a new list 
+3. what if save twice to the saving account

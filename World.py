@@ -55,5 +55,5 @@ if __name__ == '__main__':
     menu = Menu(p,env,hc,sc,bc)
     menu.EnterGame()
     run(hc,sc,menu)
-    env.run(until = G.maxTime)
+    env.run()
 
