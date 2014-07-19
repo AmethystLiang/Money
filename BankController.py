@@ -64,11 +64,14 @@ class BankController:
 
 
     def loan(self):
+        if self.player.loan != 0:
+            print "You can't loan more money because you still need to pay the bank back %d dollars." %seld.player.loan
+            return
         time = 0
         while True: 
             time = check_positive_valid_input("Please enter the time you want keep this loan? Units are in months."+'\n'\
                 +"Please note you can't loan money for less than a month")
-            if not (time/1 <1 ):
+            if time/1 >= 1 :
                 break
             print "Please enter a valid input."   
         interest_rate = self.bank.interest_rate(time,True)
