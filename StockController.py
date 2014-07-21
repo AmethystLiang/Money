@@ -31,9 +31,7 @@ class StockController:
     def buyStock(self):
         #could have a input box for user to enter 
         print "The stocks you can buy are :"
-        for ticker in self.STOCKS.keys():
-            if self.STOCKS[ticker].purchased == 0 :
-                print ticker 
+        print self.STOCKS.keys()
         print "Enter the ticker name to buy the stock your want "
         stock_name = Tools.get_option("Enter the name below",self.STOCKS.keys())
         print "You chose %s 's stock" %stock_name
@@ -48,19 +46,23 @@ class StockController:
             amount =Tools.check_positive_valid_input("Enter your number below:")
             cost = amount*stock_price
             print "The cost for buying %d shares of %s stock is %f dollars" %(amount,stock_name,cost)
-            if self.player.buy_property(cost,"Sorry, you don't have enough money for buying the stock."):
-                stock.purchased = 1   #record that the stock is purchased
-                stock.amount = amount # record how many shares you have purchased
-                stock.price = stock_price  #record the buying price , for future sale reference 
+            print "The commision fee is 30 dollars." #also deduct the commision fee
+            if self.player.buy_property(cost+30,"Sorry, you don't have enough money for buying the stock."):
+                stock.purchase_record(stock_price,amount)  #record that the stock with the price.
         else :
             return
-         
+    
+    #simulate how easy you 
+    def price_match():
+        pass
+
+
     def sellStock(self):
         #make a copy of the list of stocks available 
         purchased_stock = self.update_purchase()
-        #remove the not purchased ones from the copied list
-        if len(purchased_stock) == 0:
-            print "You don't have any stock to sell. "
+        #if no stock has been purchased
+        if not purchased_stock) :
+            print "You don't have any stock to sell. Please buy a stock first."
             return
         stock_name = Tools.get_option("Enter the ticker name to sell your chosen stock.",purchased_stock.keys())
         current_date = Tools.current_date(self.start_date,self.env)
@@ -68,6 +70,8 @@ class StockController:
         stock_price = float(stock.get_historical_prices(current_date,current_date))
         #return   #for test
         print "The current price of the stock is %f dolars per share. " %stock_price
+        for history in stock.purchase_history:
+            print "%d shares of this stock was purchase with price %d per share." %(history.amount,history.price)
         wanna_sell = Tools.check_confirm("Enter Y to continue sell this stock. Enter N to exit")
         if wanna_sell:
             max_amount = stock.amount
@@ -75,7 +79,7 @@ class StockController:
             amount =Tools.check_positive_valid_input("Enter your number below:")
             gain = amount*stock_price
             print "The money you gained from selling %d shares of %s stock is %f dollars" %(amount,stock_name,gain)
-            print "The net gain from this transaction of this stock is %d dollars " %(gain - stock.price*stock.amount)
+            print "The net gain from this stock is %d dollars " %(gain - stock.calculate_money_paid())
             stock.amount -= amount # record how many shares you have purchased
             self.player.add_money(gain)  #save the money to player's account
             if amount == stock.amount :
@@ -86,8 +90,11 @@ class StockController:
     def update_purchase(self):
         purchased_stock = self.STOCKS.copy()
         for ticker in purchased_stock.keys():
-            if self.STOCKS[ticker].purchased == 0 :
+            #the purchase history for that stock is empty
+            if not self.STOCKS[ticker].transaction_history  : 
                 del purchased_stock[ticker]  #removed the not purchased stock from the list 
+            else : 
+                pass
         return purchased_stock
 
 if __name__ == '__main__':

@@ -25,9 +25,9 @@ import simpy
 
 class Stock:
 
-    def __init__(self, __symbol):
-        self.symbol = __symbol
-        self.purchased = 0
+    def __init__(self, symbol):
+        self.symbol = symbol
+        self.transaction_history = {}
         self.amount = 0
         self.price = 0
         
@@ -58,6 +58,29 @@ class Stock:
         data = [day[:-2].split(',') for day in days]
         price = (float(data[1][1]) + float(data[1][2]))/2
         return price
+
+    def buy_record(self,price,amount):
+        p  = Transaction(price,amount,True) #buy
+        self.transaction_history.append(p) #add this purchase record to the transaction history
+
+
+    def sell_record(self,price,amount):
+        p = Transaction(price,amount,False) #sell
+        self.transaction_history.append(p) #add this sell record to the transaction history
+
+    def calculate_money_paid(self):
+        money = 0 
+        for history in self.purchase_history:
+            money += history.price * history.amount
+
+
+
+class Transaction:
+    def __init__(self,price,amount,is_buy):
+        self.price = price
+        self.amount = amount
+        self.is_buy = is_buy 
+
 
 
 if __name__ == '__main__':
