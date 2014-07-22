@@ -46,7 +46,7 @@ class BankController:
                 print "Please enter the right input."
             self.player.checking_account.withdraw(amount) #first, withdraw the money from checking account
             self.player.saving_account.save(amount) #then put it in saving account 
-            G.tillWithdraw = time*4   #set the countdown
+            G.tillWithdraw = time*4-1   #set the countdown, unit in weeks
             self.player.saving_account.interest_rate = interest_rate
             self.player.saving_account.interest= amount * interest_rate
         else : 
@@ -100,10 +100,10 @@ class BankController:
         wanna_loan = check_confirm("Print Y to continue your loan application with above interest rate. Press N to exit.")
         if wanna_loan : 
             amount = check_positive_valid_input("Please enter the amount you want to loan from the bank ? ")
-            G.tillPay = time*4 #set the countdown to pay the money 
+            G.tillPay = time*4 -1 #set the countdown to pay the money, unit in weeks 
             self.player.loan = amount*(1 + interest_rate)  #record loan amount and interest together 
             self.player.checking_account.save(amount) #transfer the money to player's checking account
-            print "Sucessfully borrow %d dollars from the bank. You have to pay %d dollars including interest back %d months later." %(amount,self.player.loan,G.tillPay)
+            print "Sucessfully borrow %d dollars from the bank. You have to pay %d dollars including interest back %d months later." %(amount,self.player.loan,time)
         else : 
             return
 

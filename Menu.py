@@ -19,7 +19,6 @@ class Menu:
 
 #Check whether the key press is "ENTER",if yes, continue
     def EnterGame(self):
-        os.system("clear")
         print "Welcome to Neil's World! " + '\n'+  "Make your own fortune to buy Jinjing a BMW ~ " 
         print "Press Enter to paly.Press q to exit the game"
         x = raw_input()
@@ -32,8 +31,9 @@ class Menu:
             sys.exit()
         #if the keypress is not "ENTER", print the prompt again
         else: 
+            os.system("clear")
             print "please press the right key "
-            EnterGame()
+            self.EnterGame()
 
 
 
@@ -121,7 +121,7 @@ class Menu:
         m = "Sorry, you do not have enough money to build this many rooms." + '\n' + "With all your money,\
             you can only build %d rooms of this type" %(self.player.checking_account.balance/hotel.room_cost[roomtype])
         roomnumber = hotel.simpy_rooms[roomtype].capacity + 1
-        upgrade_cost = checking_account.balance + 1
+        upgrade_cost = self.player.checking_account.balance + 1
         while True :
             while roomnumber > (hotel.simpy_rooms[roomtype].capacity - hotel.init_room_number[roomtype]):
                 message = "How many more rooms would you want to build ? Can only buy %d more" %(hotel.simpy_rooms[roomtype].capacity - hotel.init_room_number[roomtype])
@@ -171,7 +171,7 @@ class Menu:
 
     def new_hotel(self):
         os.system("clear")
-        self.hc.build_new_hotel(self.player) 
+        self.hc.build_new_hotel() 
         yield self.env.timeout(0)  
 
 
@@ -182,7 +182,7 @@ class Menu:
         while True :
             self.bc.check_checking()
             self.bc.check_saving()
-            choice1 = int(Tools.get_option("""Enter 1 to tranfer money from cheking account to saving account.
+            choice1 = int(Tools.get_option("""Enter 1 to transfer money from cheking account to saving account.
         Enter 2 to transfer money from saving account to checking account.
         Enter 3 to loan money from bank.
         Enter 4 to exit.""",[1,2,3,4]))
@@ -202,9 +202,13 @@ class Menu:
     def stock_business(self):
         os.system("clear")
         print "Welcome to Jinjing's stock exchange center ! "
-        print "The stocks you currently own are :"
-        for ticker in self.sc.update_purchase().keys():
-            print ticker
+        owned_stock = self.sc.update_stock()
+        if not owned_stock:
+            print "You currently don't have any stocks. Please buy a stock first."
+        else : 
+            print "The stocks you currently own are :"
+            for ticker in self.sc.update_stock().keys():
+                print ticker
         while True: 
             choice = int(Tools.get_option("""
     Enter 1 to buy stock.
@@ -217,3 +221,6 @@ class Menu:
             if choice == 3:
                break
         yield self.env.timeout(0)
+
+
+

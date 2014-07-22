@@ -12,6 +12,13 @@
 #
 #  Requires: Python 2.7/3.3+
 
+
+import simpy
+
+
+
+        
+
 try:
     # py3
     from urllib.request import Request, urlopen
@@ -22,14 +29,17 @@ except ImportError:
     from urllib import urlencode
 
 import simpy
+from GlobalDeclaration import *
 
 class Stock:
 
     def __init__(self, symbol):
         self.symbol = symbol
-        self.transaction_history = {}
+        self.transaction_history = []
         self.amount = 0
-        self.price = 0
+        self.money_paid = 0
+        self.money_gained = 0
+
         
     def get_historical_prices(self,start_date,end_date):
         
@@ -38,9 +48,17 @@ class Stock:
     Date format is 'YYYY-MM-DD'
 
     Returns a nested dictionary (dict of dicts).
-    outer dict keys are dates ('YYYY-MM-DD')"""
+    outer dict keys are dates ('YYYYMMDD')
  
-    
+        url = 'http://ichart.yahoo.com/table.csv?s=%s&' % self.symbol + \
+              'd=%s&' % str(int(end_date[5:7]) - 1) + \
+              'e=%s&' % str(int(end_date[8:10])) + \
+              'f=%s&' % str(int(end_date[0:4])) + \
+              'g=d&' + \
+              'a=%s&' % str(int(start_date[5:7]) - 1) + \
+              'b=%s&' % str(int(start_date[8:10])) + \
+              'c=%s&' % str(int(start_date[0:4])) + \
+              'ignore=.csv'"""
         params = urlencode({
         's': self.symbol,
         'a': int(start_date[5:7]) - 1,
@@ -52,7 +70,8 @@ class Stock:
         'g': 'd',
         'ignore': '.csv',
         })
-        
+        # http://ichart.yahoo.com/table.csv?s=<string>&a=<int>&b=<int>&c=<int>&d=<int>&e=<int>&f=<int>&g=d&ignore=.csv
+        # http://ichart.yahoo.com/table.csv?a=0&ignore=.csv&s=GE&b=1&e=1&d=0&g=d&f=2004&c=2004
         url = 'http://ichart.yahoo.com/table.csv?%s' % params
         days = urlopen(url).readlines()
         data = [day[:-2].split(',') for day in days]
@@ -60,28 +79,44 @@ class Stock:
         return price
 
     def buy_record(self,price,amount):
-        p  = Transaction(price,amount,True) #buy
+        p  = Transaction(self.symbol,price,amount,True,G.reported) #buy
         self.transaction_history.append(p) #add this purchase record to the transaction history
 
 
     def sell_record(self,price,amount):
-        p = Transaction(price,amount,False) #sell
+        p = Transaction(self.symbol,price,amount,False,G.reported) #sell
         self.transaction_history.append(p) #add this sell record to the transaction history
 
-    def calculate_money_paid(self):
-        money = 0 
-        for history in self.purchase_history:
-            money += history.price * history.amount
+    def calculate_money(self,cost,is_buy):
+            if is_buy == True:
+                self.money_paid += cost
+            else :
+                self.money_gained += cost
+
+
+    def check_transaction(self):
+        if not self.transaction_history:
+            print "You don't have any transaction history for this stock."
+            return
+        for transaction in self.transaction_history :
+            transaction.check_transaction()
 
 
 
 class Transaction:
-    def __init__(self,price,amount,is_buy):
+    def __init__(self,symbol,price,amount,is_buy,week):
+        self.symbol = symbol
         self.price = price
         self.amount = amount
-        self.is_buy = is_buy 
+        self.is_buy = is_buy
+        self.week = week
 
-
+    def check_transaction(self):
+        if self.is_buy :
+            buy = 'bought'
+        else :
+            buy = "sold"
+        print "Week %d , you %s %d shares of %s stock for %d dollars per share." %(self.week,buy,self.amount,self.symbol,self.price)
 
 if __name__ == '__main__':
     stock = Stock('GE')

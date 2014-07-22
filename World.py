@@ -28,14 +28,6 @@ def run(hc,sc,menu):
     hc.run(menu)
     
 
-    
-
-        
-
-#starting time
-week = 0
-month = 1
-year = 2014
 
 
 
@@ -53,6 +45,7 @@ if __name__ == '__main__':
     hc = HC.HotelController(env,p)
     sc = StockController(p,env)
     menu = Menu(p,env,hc,sc,bc)
+    os.system("clear")
     menu.EnterGame()
     run(hc,sc,menu)
     env.run()
