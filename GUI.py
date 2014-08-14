@@ -7,6 +7,7 @@ The simulation include a virtue clock, the clock counts days instead of seconds"
 from simpy import *
 from GlobalDeclaration import *
 from PySide import QtCore, QtGui
+import time
 import Hotel 
 import HotelController as HC
 import Player
@@ -19,45 +20,10 @@ from BankController import *
 """So, what it would do first is setup the environment: Create a player, create the other controllers, and start the time keeping (simulation of time)
 Now, within it, it'd call the other controllers."""
 
-
-
-
-
-
-
-
-class GUI(QtCore.QObject):
-
-
-    def run(self):
-        sim_thread = SimThread()
-        #self.connect( self.workThread, QtCore.SIGNAL("update(QString)"), self.add )
-        sim_thread.start()
-        time.sleep(0.3)
-
-    def thread_test():
-        print "testing 1 2 3" 
-
-    def emit_test(self):
-        print "testing"
-        self.emit(QtCore.SIGNAL('update()'))
-
-    #Setup GUI->python functionailty here
-    def setupGUI(self, ui):
-        QtCore.QObject.connect(ui.startButton, QtCore.SIGNAL("clicked()"), self.run )
-        #ToDo: fix this
-        #self.trigger.emit()
-        
-        QtCore.QObject.connect(ui.buildHotelButton, QtCore.SIGNAL("clicked()"), self.emit_test )
-        #QtCore.QObject.connect(ui.buildHotelButton, QtCore.SIGNAL("clicked()"), self.emit(QtCore.SIGNAL('update(QString)')) )
-
-        #Have this emit a signal that connects to a connecter within the sim thread that runs TestThread
-
-my_GUI = GUI()
-
 class SimThread(QtCore.QThread):
- def __init__(self): 
+ def __init__(self, GUI): 
   QtCore.QThread.__init__(self)
+  self.GUI = GUI
 
  def __del__(self):
   self.wait()
@@ -74,7 +40,7 @@ class SimThread(QtCore.QThread):
     sc = StockController(p,env)
     menu = Menu(p,env,hc,sc,bc)
     #Todo: Fix this
-    QtCore.QObject.connect(my_GUI, QtCore.SIGNAL('update()'), self.add_hotel)
+    QtCore.QObject.connect(self.GUI, QtCore.SIGNAL('build_hotel()'), self.add_hotel)
     menu.EnterGame()
     bc.setup()
     sc.setup()
@@ -85,11 +51,26 @@ class SimThread(QtCore.QThread):
     print "test add hotel"
 
 
+class GUI(QtCore.QObject):
+    def run(self):
+        sim_thread = SimThread(self)
+        sim_thread.start()
+        time.sleep(0.3)
+
+    def emit_build(self):
+        self.emit(QtCore.SIGNAL('build_hotel()'))
+
+    #Setup GUI->python functionailty here
+    def setupGUI(self, ui):
+        QtCore.QObject.connect(ui.startButton, QtCore.SIGNAL("clicked()"), self.run )       
+        QtCore.QObject.connect(ui.buildHotelButton, QtCore.SIGNAL("clicked()"), self.emit_build )
+        
+
 #run the world 
 if __name__ == '__main__':
     #InitialSetup#
     import sys
-    
+    my_GUI = GUI()
     app = QtGui.QApplication(sys.argv)
     MainWindow = QtGui.QMainWindow()
     ui = mainWindow.Ui_MainWindow()
