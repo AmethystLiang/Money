@@ -1,0 +1,28 @@
+GUI Threading Readme (8/14):
+
+I figured everything out by reading: http://joplaete.wordpress.com/2010/07/21/threading-with-pyqt4/
+
+I'll explain the method in which the multithreading functions within GUI.py
+
+First we create the threads!
+1. You'll see a class based upon QtCore.QThread named SimThread . This runs the actual simulation in it's own thead. We define all the code which we want to run inside the "run()" method. This is required.
+2. Now you see the GUI class which also has a "run()" method. This does not neeed to be named this. Inside the run method, we create a thread and start it. Afterwards we sleep (this is required for an unkown reason for the threads to be seperate)
+
+Next we connect things!
+1. This first line inside GUI.setupGUI is "QtCore.QObject.connect(ui.startButton, QtCore.SIGNAL("clicked()"), self.run ) ".
+    This Line simply connects the physical GUI start button to run the GUI.run method upon clicking the button.
+2. The next part is more complicated. It connects the actual threads....
+3. "QtCore.QObject.connect(ui.buildHotelButton, QtCore.SIGNAL("clicked()"), self.emit_build )"
+    This line connects the physical GUI build hotel button to emit a signal and call a method within the Simulation Thread. It emits a "self.emit(QtCore.SIGNAL('build_hotel()'))"
+4. This is connected to the thread via a "QtCore.QObject.connect(self.GUI, QtCore.SIGNAL('build_hotel()'), self.add_hotel)".
+5. As you might have noticed, the connect method requires us to pass the origin (the object where the signal is emmited from) as the first argument. So, when we create the thread, we pass in the GUI as well. You can see this inside the GUI.run method "sim_thread = SimThread(self)"
+6. The 2'nd connect argument listens for the "build_hotel()" signal and the final argument is the method which is called upon catching the signal (the button being pressed inside the other thread).
+
+Additionly:
+If you'd like to pass arguments, you'd have to add them inisde the emit and caught signal:
+eg: QtCore.SIGNAL('build_hotel(str)', "INPUT")
+Where str is the type argument passed to the method and the "INPUT" is the actual argument. I know...the syntax is shitty
+
+
+
+Hopefully you don't need to actual read this and I can take care of it. But I thought it'd be good to document.
